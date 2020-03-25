@@ -1,0 +1,6 @@
+.idea/
+node_modules/
+dev/.nuxt/
+lib/
+
+.DS_Store

@@ -1,0 +1,52 @@
+{
+  "name": "@sedona-cms/blocks",
+  "version": "1.0.0",
+  "description": "Block editor for Sedona CMS",
+  "main": "index.js",
+  "scripts": {
+    "watch": "make -f Makefile watch",
+    "build": "make -f Makefile build-prod",
+    "eslint": "eslint --fix 'src/**/*.{js,ts,tsx}'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sedona-cms/blocks.git"
+  },
+  "keywords": [],
+  "author": "Ivan Kalinichenko <kalinichenko@constlab.ru>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sedona-cms/blocks/issues"
+  },
+  "homepage": "https://github.com/sedona-cms/blocks#readme",
+  "devDependencies": {
+    "@nuxt/types": "^0.6.4",
+    "@sedona-cms/eslint-config": "0.0.1",
+    "@types/node": "^12.12.31",
+    "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
+    "@vue/babel-preset-jsx": "^1.1.2",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.0.9",
+    "nuxt": "^2.12.0",
+    "prettier": "^2.0.2",
+    "tsc-watch": "^4.2.3",
+    "typescript": "^3.8.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts,tsx,vue,md}": [
+      "prettier --write"
+    ],
+    "src/**/*.{js,ts,tsx}": [
+      "prettier --write",
+      "npm run eslint"
+    ],
+    "dev/**/*.{js,vue,json}": [
+      "prettier --write"
+    ]
+  }
+}

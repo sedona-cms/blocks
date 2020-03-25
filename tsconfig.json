@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "target": "es2020",
+    "moduleResolution": "Node",
+    "noImplicitAny": false,
+    "noLib": false,
+    "skipLibCheck": true,
+    "sourceMap": false,
+    "allowJs": true,
+    "checkJs": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "jsx": "preserve",
+    "jsxFactory": "h",
+    "strict": true,
+    "removeComments": false,
+    "importHelpers": true,
+    "listFiles": false,
+    "lib": ["ES6", "DOM", "DOM.Iterable"],
+    "outDir": "./lib",
+    "typeRoots": [
+      "./node_modules/@types", "./types"
+    ]
+  },
+  "exclude": ["node_modules", "lib", "dev", "scripts"]
+}
