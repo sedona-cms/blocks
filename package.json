@@ -2,8 +2,12 @@
   "name": "@sedona-cms/blocks",
   "version": "1.0.0",
   "description": "Block editor for Sedona CMS",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
+    "dev": "nuxt --config-file dev/nuxt.config.js",
+    "dev:build": "nuxt build --config-file dev/nuxt.config.js",
+    "dev:build:analyze": "nuxt build --analyze --config-file dev/nuxt.config.js",
+    "dev:start": "nuxt start --config-file dev/nuxt.config.js",
     "watch": "make -f Makefile watch",
     "build": "make -f Makefile build-prod",
     "eslint": "eslint --fix 'src/**/*.{js,ts,tsx}'"
@@ -19,7 +23,12 @@
     "url": "https://github.com/sedona-cms/blocks/issues"
   },
   "homepage": "https://github.com/sedona-cms/blocks#readme",
+  "dependencies": {
+    "@sedona-cms/blocks-meta-loader": "^1.0.2"
+  },
   "devDependencies": {
+    "@getsedona/nuxt-sedona": "0.0.20",
+    "@getsedona/vue-components": "^0.1.6",
     "@nuxt/types": "^0.6.4",
     "@sedona-cms/eslint-config": "0.0.1",
     "@types/node": "^12.12.31",
@@ -29,6 +38,7 @@
     "lint-staged": "^10.0.9",
     "nuxt": "^2.12.0",
     "prettier": "^2.0.2",
+    "sedona-components": "^4.10.3",
     "tsc-watch": "^4.2.3",
     "typescript": "^3.8.3"
   },
