@@ -2,5 +2,11 @@
   "toolbar": {
     "title": "Sedona Blocks"
   },
-  "items": []
+  "items": [
+    {
+      "title": "Edit Post",
+      "type": "item",
+      "component": "views/edit-post"
+    }
+  ]
 }
