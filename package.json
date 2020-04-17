@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/sedona-cms/blocks#readme",
   "dependencies": {
-    "@sedona-cms/blocks-meta-loader": "^1.0.2"
+    "@sedona-cms/blocks-meta-loader": "^1.0.4"
   },
   "devDependencies": {
     "@getsedona/nuxt-sedona": "0.0.20",

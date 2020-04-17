@@ -1,4 +1,4 @@
 type ModuleConfig = {
-  blocksDir?: string
+  blocksDir: string
 
 }
