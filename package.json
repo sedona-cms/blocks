@@ -25,13 +25,13 @@
   "homepage": "https://github.com/sedona-cms/blocks#readme",
   "dependencies": {
     "@sedona-cms/blocks-meta-loader": "^1.0.4",
-    "@sedona-cms/core": "0.0.8"
+    "@sedona-cms/core": "^1.0.5"
   },
   "devDependencies": {
     "@getsedona/nuxt-sedona": "0.0.20",
     "@getsedona/vue-components": "^0.1.6",
     "@nuxt/types": "^0.6.4",
-    "@sedona-cms/eslint-config": "0.0.1",
+    "@sedona-cms/eslint-config": "^1.0.0",
     "@types/node": "^12.12.31",
     "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
     "@vue/babel-preset-jsx": "^1.1.2",

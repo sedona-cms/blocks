@@ -8,6 +8,8 @@ export default Vue.extend({
     }
   },
   render(): VNode {
+    // @ts-ignore
+    console.log(this.$blocks)
     return <div>BlocksPalette</div>
   },
 })

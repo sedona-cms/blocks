@@ -23,6 +23,23 @@ const blocksModule: Module<ModuleConfig> = async function (moduleOptions) {
   console.log(meta)
 
   console.timeEnd('loading blocks')
+
+  this.addTemplate({
+    src: path.resolve(__dirname, 'templates/blocks.js'),
+    fileName: path.join('admin/blocks', 'blocks.js'),
+    options: meta,
+  })
+
+  // Plugins
+
+  this.addPlugin({
+    src: path.resolve(__dirname, 'templates/plugin.js'),
+    fileName: path.join('admin/blocks', 'plugin.js'),
+    mode: 'client',
+    options: {
+      blocks: meta,
+    },
+  })
 }
 
 export default blocksModule
