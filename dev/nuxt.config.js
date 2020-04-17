@@ -1,7 +1,7 @@
 export default {
   rootDir: 'dev',
 
-  modules: [['../lib/module.js', {}]],
+  modules: ['@sedona-cms/core', ['../lib/module.js', {}]],
 
   buildModules: ['@getsedona/nuxt-sedona'],
 
@@ -9,7 +9,7 @@ export default {
     components: ['page', 'scene', 'feature'],
   },
 
-  // plugins: [{ src: '~/plugins/admin', mode: 'client' }],
+  plugins: [{ src: '~/plugins/admin', mode: 'client' }],
 
   // watch: ['../lib/*.js', '../lib/**/*.js']
 

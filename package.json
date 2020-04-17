@@ -4,7 +4,7 @@
   "description": "Block editor for Sedona CMS",
   "main": "lib/index.js",
   "scripts": {
-    "dev": "nuxt --config-file dev/nuxt.config.js",
+    "dev": "nuxt --port 3001 --config-file dev/nuxt.config.js",
     "dev:build": "nuxt build --config-file dev/nuxt.config.js",
     "dev:build:analyze": "nuxt build --analyze --config-file dev/nuxt.config.js",
     "dev:start": "nuxt start --config-file dev/nuxt.config.js",
@@ -41,6 +41,9 @@
     "sedona-components": "^4.10.3",
     "tsc-watch": "^4.2.3",
     "typescript": "^3.8.3"
+  },
+  "peerDependencies": {
+    "@sedona-cms/core": "0.* | 1.*"
   },
   "husky": {
     "hooks": {

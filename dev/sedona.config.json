@@ -1,20 +1,6 @@
 {
   "toolbar": {
-    "title": "Sedona Admin",
-    "buttons": [
-      {
-        "title": "SEO",
-        "icon": "folder",
-        "component": "views/site-seo"
-      }
-    ]
+    "title": "Sedona Blocks"
   },
-  "items": [
-    {
-      "title": "Post List",
-      "subTitle": "Post list Subtitle",
-      "type": "item",
-      "component": "views/posts-list"
-    }
-  ]
+  "items": []
 }
