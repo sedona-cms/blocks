@@ -24,7 +24,8 @@
   },
   "homepage": "https://github.com/sedona-cms/blocks#readme",
   "dependencies": {
-    "@sedona-cms/blocks-meta-loader": "^1.0.4"
+    "@sedona-cms/blocks-meta-loader": "^1.0.4",
+    "@sedona-cms/core": "0.0.8"
   },
   "devDependencies": {
     "@getsedona/nuxt-sedona": "0.0.20",
@@ -36,14 +37,12 @@
     "@vue/babel-preset-jsx": "^1.1.2",
     "husky": "^4.2.3",
     "lint-staged": "^10.0.9",
+    "npm-self-link": "^1.1.7",
     "nuxt": "^2.12.0",
     "prettier": "^2.0.2",
     "sedona-components": "^4.10.3",
     "tsc-watch": "^4.2.3",
     "typescript": "^3.8.3"
-  },
-  "peerDependencies": {
-    "@sedona-cms/core": "0.* | 1.*"
   },
   "husky": {
     "hooks": {
