@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import { BlocksPalette } from '@sedona-cms/blocks/components'
+  import { BlocksPalette } from '@sedona-cms/blocks/lib/components'
 
   export default {
     name: 'EditPost',

@@ -1,4 +1,3 @@
-import groupBy from 'lodash/groupBy'
 import { BlockMeta } from '@sedona-cms/blocks-meta-loader'
 
 type GroupedMeta = {
@@ -14,7 +13,11 @@ export class Blocks {
     return blocksMeta
   }
 
-  get groupedMeta(): Readonly<GroupedMeta> {
-    return groupBy(blocksMeta, 'group') as Readonly<GroupedMeta>
+  get groupedMeta(): Map<string, BlockMeta> {
+    const meta = new Map<string, BlockMeta>()
+    for (const metaItem of blocksMeta) {
+      meta.set(metaItem.group || 'general', metaItem)
+    }
+    return meta
   }
 }
