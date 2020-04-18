@@ -3,12 +3,10 @@ lint:
 
 build-ts-dev: lint
 	rm -rf lib
-	rm -rf types/generated
 	npx tsc --project tsconfig.json
 
 build-ts-prod: lint
 	rm -rf lib
-	rm -rf types/generated
 	npx tsc --project tsconfig.build.json
 
 copy-css:
@@ -16,7 +14,7 @@ copy-css:
 
 build-dev: build-ts-dev
 
-build-prod: build-ts-prod
+build-prod: build-ts-prod copy-css
 
 watch: build-dev
 	npx tsc-watch --onSuccess 'make -f Makefile copy-css'

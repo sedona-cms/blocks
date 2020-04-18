@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import { Context } from '@nuxt/types'
 import { eventBus } from '@sedona-cms/core'
+import { BlockMeta } from '@sedona-cms/blocks-meta-loader'
 
 interface Asd {
   blocks: BlockMeta[]

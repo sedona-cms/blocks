@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Block editor for Sedona CMS",
   "main": "lib/index.js",
+  "types": "types/index.d.ts",
   "scripts": {
     "dev": "nuxt --port 3001 --config-file dev/nuxt.config.js",
     "dev:build": "nuxt build --config-file dev/nuxt.config.js",

@@ -7,9 +7,9 @@ export default Vue.extend({
       search: '' as string,
     }
   },
+  mounted(): void {},
   render(): VNode {
-    // @ts-ignore
-    console.log(this.$blocks)
+    // console.log(this.$)
     return <div>BlocksPalette</div>
   },
 })

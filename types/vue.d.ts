@@ -1,7 +1,5 @@
-type ModuleConfig = {
-  blocksDir: string
+import Vue from 'vue'
 
-}
 declare module 'vue/types/vue' {
   import { Blocks } from '../src/templates/blocks'
 
