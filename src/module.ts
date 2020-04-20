@@ -28,7 +28,8 @@ const blocksModule: Module<ModuleConfig> = async function (moduleOptions) {
   const groupedBlocksFunc = flow([
     () => orderBy(blocksMeta, 'name'),
     result => groupBy(result, 'group'),
-    result => orderBy(toPairs(result), item => item[0]),
+    result => toPairs(result),
+    result => orderBy(result, item => item[0]),
     result => fromPairs(result),
   ])
 
