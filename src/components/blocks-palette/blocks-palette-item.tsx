@@ -1,5 +1,4 @@
 import Vue, { VNode, PropType } from 'vue'
-import startCase from 'lodash/startCase'
 
 export default Vue.extend({
   name: 'BlocksPaletteItem',
@@ -28,7 +27,7 @@ export default Vue.extend({
       subTitle = <q-item-label caption={true}>{props.description}</q-item-label>
     }
 
-    const title = <q-item-label>{startCase(props.title)}</q-item-label>
+    const title = <q-item-label>{props.title}</q-item-label>
 
     return (
       <q-item

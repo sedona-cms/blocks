@@ -1,4 +1,5 @@
 import Vue, { VNode } from 'vue'
+import upperFirst from 'lodash/upperFirst'
 import { BlockMeta } from '@sedona-cms/blocks-meta-loader'
 import BlocksPaletteSearch from './blocks-palette-search'
 import BlocksPaletteItem from './blocks-palette-item'
@@ -15,15 +16,20 @@ export default Vue.extend({
     }
   },
   computed: {
-    blocks(): Map<string, BlockMeta> {
+    blocks(): { [key: string]: BlockMeta[] } {
       if (this.search === '') return this.$blocks.groupedMeta
-      const result: Map<string, BlockMeta> = new Map<string, BlockMeta>()
+
+      const result: { [key: string]: BlockMeta[] } = {}
       const search = this.search.toLowerCase()
-      for (const blockMeta of this.$blocks.groupedMeta.values()) {
-        const name = (blockMeta?.name || '').toLowerCase()
-        const description = (blockMeta?.description || '').toLowerCase()
-        if (name.includes(search) || description.includes(search)) {
-          result.set(blockMeta.group || 'general', blockMeta)
+
+      for (const groupName of Object.keys(this.$blocks.groupedMeta)) {
+        const blocks = this.$blocks.groupedMeta[groupName].filter(blockMeta => {
+          const name = (blockMeta?.name || '').toLowerCase()
+          const description = (blockMeta?.description || '').toLowerCase()
+          return name.includes(search) || description.includes(search)
+        })
+        if (blocks.length > 0) {
+          result[groupName] = blocks
         }
       }
       return result
@@ -36,9 +42,21 @@ export default Vue.extend({
   },
   render(): VNode {
     const items: VNode[] = []
-    for (const [index, value] of this.blocks) {
-      console.log(index, value)
-      items.push()
+    for (const groupName of Object.keys(this.blocks)) {
+      items.push(<q-item-label header={true}>{upperFirst(groupName)}</q-item-label>)
+      items.push(
+        ...this.blocks[groupName].map(blockMeta => {
+          return (
+            <blocks-palette-item
+              name={blockMeta.name}
+              title={blockMeta.title}
+              description={blockMeta.description}
+              icon={blockMeta.icon}
+              on-click={blockName => console.log(blockName)}
+            />
+          )
+        })
+      )
     }
 
     return (

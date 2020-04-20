@@ -1,11 +1,11 @@
 import { BlockMeta } from '@sedona-cms/blocks-meta-loader'
 
-type GroupedMeta = {
-  [key: string]: BlockMeta
-}
-
 const blocksMeta: ReadonlyArray<BlockMeta> = Object.freeze(
-  JSON.parse('<%= JSON.stringify(options) %>')
+  JSON.parse('<%= JSON.stringify(options.blocksMeta) %>')
+)
+
+const groupedBlocksMeta: { [key: string]: BlockMeta[] } = Object.freeze(
+  JSON.parse('<%= JSON.stringify(options.groupedBlocksMeta) %>')
 )
 
 export class Blocks {
@@ -13,11 +13,7 @@ export class Blocks {
     return blocksMeta
   }
 
-  get groupedMeta(): Map<string, BlockMeta> {
-    const meta = new Map<string, BlockMeta>()
-    for (const metaItem of blocksMeta) {
-      meta.set(metaItem.group || 'general', metaItem)
-    }
-    return meta
+  get groupedMeta(): { [key: string]: BlockMeta[] } {
+    return groupedBlocksMeta
   }
 }
