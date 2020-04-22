@@ -1,11 +1,12 @@
-import Vue, { VNode } from 'vue'
+import Vue, { VNode, PropType } from 'vue'
 import { BlocksPalette } from '../blocks-palette'
+import { BlockData } from '../../types'
 
 export default Vue.extend({
   name: 'BlocksEditor',
   props: {
     blocks: {
-      type: Array,
+      type: Array as PropType<BlockData[]>,
       required: true,
     },
   },

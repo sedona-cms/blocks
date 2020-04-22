@@ -1,6 +1,6 @@
 <template>
   <div>
-    <blocks-editor />
+    <blocks-editor v-if="page" :blocks="page.content" />
   </div>
 </template>
 
@@ -11,6 +11,14 @@
     name: 'EditPost',
     components: {
       BlocksEditor,
+    },
+    data() {
+      return {
+        page: null,
+      }
+    },
+    async mounted() {
+      this.page = await this.$http.$get('data/index.json')
     },
   }
 </script>

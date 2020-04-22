@@ -1,0 +1,16 @@
+{
+  "page": "Home Page",
+  "content": [
+    {
+      "id": "tdkjlizscl",
+      "component": "TextBlock",
+      "props": {
+        "text": "Hello, world!"
+      }
+    },
+    {
+      "id": "bft0vr3xl2",
+      "component": "TeaserBlock"
+    }
+  ]
+}
