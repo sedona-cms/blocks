@@ -1,4 +1,5 @@
 import Vue, { VNode, PropType } from 'vue'
+import Draggable from 'vuedraggable'
 import { BlocksPalette } from '../blocks-palette'
 import { BlockData } from '../../types'
 import BlocksEditorItem from './blocks-editor-item'
@@ -12,6 +13,7 @@ export default Vue.extend({
     },
   },
   components: {
+    Draggable,
     BlocksPalette,
     BlocksEditorItem,
   },
@@ -48,6 +50,7 @@ export default Vue.extend({
       }
       items.add(
         <blocks-editor-item
+          key={blockData.id}
           id={blockData.id}
           component={blockData.component}
           props={blockData.props}
@@ -59,7 +62,13 @@ export default Vue.extend({
       <div>
         {toolbar}
         <blocks-palette ref="palette" />
-        <q-list dark={true}>{[...items]}</q-list>
+        <q-list dark={true}>
+          <draggable animation={200} group="description" disabled={false}>
+            <transition-group type="transition" name="flip-list">
+              {[...items]}
+            </transition-group>
+          </draggable>
+        </q-list>
       </div>
     )
   },
