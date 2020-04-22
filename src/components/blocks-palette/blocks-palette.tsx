@@ -4,6 +4,8 @@ import { BlockMeta } from '@sedona-cms/blocks-meta-loader'
 import BlocksPaletteSearch from './blocks-palette-search'
 import BlocksPaletteItem from './blocks-palette-item'
 
+import './blocks-palette.css'
+
 export default Vue.extend({
   name: 'BlocksPalette',
   components: {
@@ -13,6 +15,7 @@ export default Vue.extend({
   data() {
     return {
       search: '' as string,
+      toggleButton: null as HTMLElement | null,
     }
   },
   computed: {
@@ -35,9 +38,27 @@ export default Vue.extend({
       return result
     },
   },
+  mounted(): void {
+    this.toggleButton = document.querySelector('.toggle-button')
+  },
   methods: {
-    hide(): void {
-      console.log('hide')
+    show() {
+      this.$el.setAttribute('style', 'left: 300px;')
+      if (this.toggleButton !== null) {
+        this.toggleButton.style.display = 'none'
+      }
+      // @ts-ignore
+      this.$refs.searchInput.focus()
+      this.$emit('show')
+    },
+    hide() {
+      // @ts-ignore
+      this.$refs.searchInput.clear()
+      this.$el.setAttribute('style', 'left: 0px;')
+      if (this.toggleButton !== null) {
+        this.toggleButton.style.display = 'initial'
+      }
+      this.$emit('hide')
     },
   },
   render(): VNode {
@@ -60,7 +81,7 @@ export default Vue.extend({
     }
 
     return (
-      <div>
+      <div class="blocks-palette bg-grey-9 shadow-5">
         <q-toolbar class="bg-grey-7">
           <q-toolbar-title>Select block</q-toolbar-title>
           <q-btn flat={true} round={true} dense={true} on-click={this.hide}>

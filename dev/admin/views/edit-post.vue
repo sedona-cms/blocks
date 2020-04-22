@@ -1,16 +1,16 @@
 <template>
   <div>
-    <blocks-palette />
+    <blocks-editor />
   </div>
 </template>
 
 <script>
-  import { BlocksPalette } from '@sedona-cms/blocks/lib/components'
+  import { BlocksEditor } from '@sedona-cms/blocks/lib/components'
 
   export default {
     name: 'EditPost',
     components: {
-      BlocksPalette,
+      BlocksEditor,
     },
   }
 </script>
