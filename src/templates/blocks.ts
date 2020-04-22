@@ -16,4 +16,12 @@ export class Blocks {
   get groupedMeta(): { [key: string]: BlockMeta[] } {
     return groupedBlocksMeta
   }
+
+  existsBlock(componentName: string): boolean {
+    return this.getBlock(componentName) !== undefined
+  }
+
+  getBlock(componentName: string): BlockMeta | undefined {
+    return this.meta.find(item => item.name?.toLowerCase() === componentName.toLowerCase())
+  }
 }
