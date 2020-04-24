@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { generateId } from '@sedona-cms/core/lib/utils/nanoid'
 import { BlockData } from '../../../types'
+import { type } from 'os'
 
 Vue.use(Vuex)
 
@@ -19,6 +20,15 @@ export const store = new Vuex.Store<RootState>({
     },
     add(state, { block }: { block: BlockData }): void {
       state.items.push(block)
+    },
+    changeProp(state, { id, propName, value }: { id: string; propName: string; value: any }): void {
+      const index = state.items.findIndex(item => item.id === id)
+      if (index > -1) {
+        if (typeof state.items[index].props === 'object') {
+          // @ts-ignore
+          state.items[index].props[propName] = value
+        }
+      }
     },
     clone(state, { id }: { id: string }): void {
       const block = state.items.find(item => item.id === id)

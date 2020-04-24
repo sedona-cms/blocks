@@ -26,6 +26,11 @@ export default Vue.extend({
       return result
     },
   },
+  methods: {
+    changeForm(propName: string, value: any): void {
+      this.$emit('change', { propName, value })
+    },
+  },
   render(h: CreateElement): VNode {
     if (
       typeof this.form !== 'object' ||
@@ -42,12 +47,19 @@ export default Vue.extend({
     for (const propName of Object.keys(this.form)) {
       const editorName = `${propName}-prop-editor`
       if (Object.keys(editors).includes(editorName)) {
-        items.push(h(editorName))
+        items.push(
+          h(editorName, {
+            props: { value: this.form[propName], title: this.meta.props[propName].title },
+            on: {
+              change: value => this.changeForm(propName, value),
+            },
+          })
+        )
       }
     }
 
     return (
-      <q-card class="bg-grey-9" flat={true}>
+      <q-card class="bg-grey-9 q-pa-md" flat={true}>
         {[...items]}
       </q-card>
     )

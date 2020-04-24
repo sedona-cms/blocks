@@ -48,6 +48,9 @@ export default Vue.extend({
     cloneBlock(id: string): void {
       store.commit('clone', { id })
     },
+    changeBlockProp(id: string, propName: string, value: any): void {
+      store.commit('changeProp', { id, propName, value })
+    },
   },
   render(): VNode {
     const toolbar = (
@@ -84,6 +87,7 @@ export default Vue.extend({
           id={blockData.id}
           component={blockData.component}
           form={blockData.props || {}}
+          on-change={({ propName, value }) => this.changeBlockProp(blockData.id, propName, value)}
           on-clone={({ id }) => this.cloneBlock(id)}
           on-remove={({ id }) => store.commit('remove', { id })}
         />

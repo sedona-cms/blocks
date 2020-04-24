@@ -122,7 +122,11 @@ export default Vue.extend({
               : [headerItemIcon, headerItemTitle, headerItemMenu]),
           ],
         }}>
-        <blocks-editor-item-form component={this.component} form={this.form} />
+        <blocks-editor-item-form
+          component={this.component}
+          form={this.form}
+          on-change={(formItem: { [propName: string]: any }) => this.$emit('change', formItem)}
+        />
       </q-expansion-item>
     )
   },
