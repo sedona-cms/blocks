@@ -47,8 +47,11 @@ export default Vue.extend({
     removeClick(): void {
       this.showRemoveConfirm = true
     },
-    cloneClick(): void {
+    clone(): void {
       this.$emit('clone', { id: this.id })
+    },
+    change({ propName, value }: { propName: string; value: any }): void {
+      this.$emit('change', { propName, value })
     },
   },
   render(): VNode {
@@ -94,7 +97,7 @@ export default Vue.extend({
           on-click={event => event.stopPropagation()}>
           <q-menu auto-close={true}>
             <q-list bordered={false}>
-              <q-item clickable={true} on-click={this.cloneClick}>
+              <q-item clickable={true} on-click={this.clone}>
                 <q-item-section>Clone</q-item-section>
               </q-item>
               <q-item clickable={true} on-click={this.removeClick}>
@@ -125,7 +128,7 @@ export default Vue.extend({
         <blocks-editor-item-form
           component={this.component}
           form={this.form}
-          on-change={(formItem: { [propName: string]: any }) => this.$emit('change', formItem)}
+          on-change={this.change}
         />
       </q-expansion-item>
     )
