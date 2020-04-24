@@ -1,3 +1,4 @@
+import './../prop-editors'
 import Vue, { VNode, PropType } from 'vue'
 import Draggable from 'vuedraggable'
 import { generateId } from '@sedona-cms/core/lib/utils/nanoid'

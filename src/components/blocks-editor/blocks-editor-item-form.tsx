@@ -1,5 +1,6 @@
-import Vue, { VNode, PropType } from 'vue'
+import Vue, { VNode, PropType, CreateElement } from 'vue'
 import { BlockMeta } from '@sedona-cms/blocks-meta-loader'
+import { editors } from '../prop-editors'
 
 export default Vue.extend({
   name: 'BlocksEditorItemForm',
@@ -25,7 +26,7 @@ export default Vue.extend({
       return result
     },
   },
-  render(): VNode {
+  render(h: CreateElement): VNode {
     if (
       typeof this.form !== 'object' ||
       (typeof this.form === 'object' && Object.keys(this.form).length === 0)
@@ -39,12 +40,15 @@ export default Vue.extend({
 
     const items: VNode[] = []
     for (const propName of Object.keys(this.form)) {
-      console.log(propName)
+      const editorName = `${propName}-prop-editor`
+      if (Object.keys(editors).includes(editorName)) {
+        items.push(h(editorName))
+      }
     }
 
     return (
       <q-card class="bg-grey-9" flat={true}>
-        Form
+        {[...items]}
       </q-card>
     )
   },
