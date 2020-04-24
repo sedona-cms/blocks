@@ -1,5 +1,7 @@
 import Vue, { VNode, PropType } from 'vue'
 import Draggable from 'vuedraggable'
+import { generateId } from '@sedona-cms/core/lib/utils/nanoid'
+import { BlockMeta } from '@sedona-cms/blocks-meta-loader'
 import { BlocksPalette } from '../blocks-palette'
 import { BlockData } from '../../types'
 import BlocksEditorItem from './blocks-editor-item'
@@ -26,23 +28,43 @@ export default Vue.extend({
   created(): void {
     store.commit('load', { blocks: this.blocks })
   },
+  methods: {
+    addBlock(blockMeta: BlockMeta): void {
+      if (blockMeta.name === undefined) {
+        throw new TypeError('Component name not provided')
+      }
+      const block: BlockData = {
+        id: generateId(),
+        component: blockMeta.name,
+        props: {},
+      }
+      for (const propMetaName of Object.keys(blockMeta.props)) {
+        // @ts-ignore
+        block.props[propMetaName] = blockMeta.props[propMetaName].default
+      }
+      store.commit('add', { block })
+    },
+  },
   render(): VNode {
-    const addBlockButton = (
-      <q-btn
-        icon="add"
-        color="primary"
-        round={true}
-        dense={true}
-        size="md"
-        class="q-ml-sm"
-        on-click={() => (this.$refs['palette'] as any).show()}
-      />
-    )
-
     const toolbar = (
-      <q-toolbar class="q-pa-sm">
-        {addBlockButton}
-        <q-space />
+      <q-toolbar>
+        <q-btn icon="undo" round={true} dense={true} flat={true}>
+          <q-tooltip>Undo</q-tooltip>
+        </q-btn>
+        <q-btn icon="redo" round={true} dense={true} flat={true}>
+          <q-tooltip>Redo</q-tooltip>
+        </q-btn>
+        <q-separator inset={true} spaced={true} vertical={true} />
+        <q-separator />
+        <q-btn
+          icon="add"
+          color="primary"
+          round={true}
+          dense={true}
+          size="md"
+          className="q-ml-sm"
+          on-click={() => (this.$refs['palette'] as any).show()}
+        />
       </q-toolbar>
     )
 
@@ -58,6 +80,7 @@ export default Vue.extend({
           id={blockData.id}
           component={blockData.component}
           props={blockData.props}
+          on-clone={({ id }) => console.log('clone', id)}
           on-remove={({ id }) => store.commit('remove', { id })}
         />
       )
@@ -66,7 +89,7 @@ export default Vue.extend({
     return (
       <div>
         {toolbar}
-        <blocks-palette ref="palette" on-add-block={block => console.log(block)} />
+        <blocks-palette ref="palette" on-add-block={({ block }) => this.addBlock(block)} />
         <q-list dark={true}>
           <draggable
             animation={200}

@@ -47,6 +47,9 @@ export default Vue.extend({
     removeClick(): void {
       this.showRemoveConfirm = true
     },
+    cloneClick(): void {
+      this.$emit('clone', { id: this.id })
+    },
   },
   render(): VNode {
     /// Block item confirm
@@ -91,8 +94,8 @@ export default Vue.extend({
           on-click={event => event.stopPropagation()}>
           <q-menu auto-close={true}>
             <q-list bordered={false}>
-              <q-item clickable={true}>
-                <q-item-section>Copy</q-item-section>
+              <q-item clickable={true} on-click={this.cloneClick}>
+                <q-item-section>Clone</q-item-section>
               </q-item>
               <q-item clickable={true} on-click={this.removeClick}>
                 <q-item-section>
@@ -108,7 +111,7 @@ export default Vue.extend({
     return (
       <q-expansion-item
         icon={this.meta.icon}
-        class={['admin-block-item', 'bg-grey-7', 'text-white']}
+        class={['admin-block-item', 'bg-grey-8', 'text-white']}
         denseToggle={false}
         defaultOpened={false}
         group="blocks"

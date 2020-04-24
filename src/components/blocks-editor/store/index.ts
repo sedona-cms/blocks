@@ -13,10 +13,13 @@ export const store = new Vuex.Store<RootState>({
     items: [],
   },
   mutations: {
-    load(state, { blocks }: { blocks: BlockData[] }) {
+    load(state, { blocks }: { blocks: BlockData[] }): void {
       state.items = blocks
     },
-    remove(state, { id }: { id: string }) {
+    add(state, { block }: { block: BlockData }): void {
+      state.items.push(block)
+    },
+    remove(state, { id }: { id: string }): void {
       const index = state.items.findIndex(item => item.id === id)
       if (index > -1) {
         state.items.splice(index, 1)
