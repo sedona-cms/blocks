@@ -3,6 +3,7 @@ import Draggable from 'vuedraggable'
 import { BlocksPalette } from '../blocks-palette'
 import { BlockData } from '../../types'
 import BlocksEditorItem from './blocks-editor-item'
+import { store } from './store'
 
 export default Vue.extend({
   name: 'BlocksEditor',
@@ -21,6 +22,9 @@ export default Vue.extend({
     return {
       isPaletteOpen: false as boolean,
     }
+  },
+  created(): void {
+    store.commit('load', { blocks: this.blocks })
   },
   render(): VNode {
     const addBlockButton = (
@@ -43,7 +47,7 @@ export default Vue.extend({
     )
 
     const items = new Set<VNode>()
-    for (const blockData of this.blocks) {
+    for (const blockData of store.state.items) {
       if (!this.$blocks.existsBlock(blockData.component)) {
         console.warn(`Block with name ${blockData.component} not exists in project`)
         continue
@@ -54,6 +58,7 @@ export default Vue.extend({
           id={blockData.id}
           component={blockData.component}
           props={blockData.props}
+          on-remove={({ id }) => store.commit('remove', { id })}
         />
       )
     }
@@ -61,9 +66,13 @@ export default Vue.extend({
     return (
       <div>
         {toolbar}
-        <blocks-palette ref="palette" />
+        <blocks-palette ref="palette" on-add-block={block => console.log(block)} />
         <q-list dark={true}>
-          <draggable animation={200} group="description" disabled={false}>
+          <draggable
+            animation={200}
+            group="description"
+            disabled={false}
+            on-end={item => console.log(item)}>
             <transition-group type="transition" name="flip-list">
               {[...items]}
             </transition-group>

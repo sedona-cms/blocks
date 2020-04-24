@@ -73,7 +73,7 @@ export default Vue.extend({
               title={blockMeta.title}
               description={blockMeta.description}
               icon={blockMeta.icon}
-              on-click={blockName => console.log(blockName)}
+              on-click={blockName => this.$emit('add-block', { name: blockName })}
             />
           )
         })
