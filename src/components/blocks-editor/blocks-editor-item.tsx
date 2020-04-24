@@ -13,7 +13,7 @@ export default Vue.extend({
       type: String as PropType<string>,
       required: true,
     },
-    props: {
+    form: {
       type: Object as PropType<{ [key: string]: any }>,
       default: () => {},
     },
@@ -122,7 +122,7 @@ export default Vue.extend({
               : [headerItemIcon, headerItemTitle, headerItemMenu]),
           ],
         }}>
-        <blocks-editor-item-form />
+        <blocks-editor-item-form component={this.component} form={this.form} />
       </q-expansion-item>
     )
   },

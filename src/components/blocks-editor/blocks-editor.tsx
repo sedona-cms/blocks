@@ -82,7 +82,7 @@ export default Vue.extend({
           key={blockData.id}
           id={blockData.id}
           component={blockData.component}
-          props={blockData.props}
+          form={blockData.props || {}}
           on-clone={({ id }) => this.cloneBlock(id)}
           on-remove={({ id }) => store.commit('remove', { id })}
         />
