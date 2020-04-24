@@ -44,6 +44,9 @@ export default Vue.extend({
       }
       store.commit('add', { block })
     },
+    cloneBlock(id: string): void {
+      store.commit('clone', { id })
+    },
   },
   render(): VNode {
     const toolbar = (
@@ -80,7 +83,7 @@ export default Vue.extend({
           id={blockData.id}
           component={blockData.component}
           props={blockData.props}
-          on-clone={({ id }) => console.log('clone', id)}
+          on-clone={({ id }) => this.cloneBlock(id)}
           on-remove={({ id }) => store.commit('remove', { id })}
         />
       )
