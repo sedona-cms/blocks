@@ -32,10 +32,7 @@ export default Vue.extend({
     },
   },
   render(h: CreateElement): VNode {
-    if (
-      typeof this.form !== 'object' ||
-      (typeof this.form === 'object' && Object.keys(this.form).length === 0)
-    ) {
+    if (Object.keys(this.meta.props).length === 0) {
       return (
         <q-card class="bg-grey-9 q-pa-md text-grey" flat={true}>
           No field
@@ -44,12 +41,15 @@ export default Vue.extend({
     }
 
     const items: VNode[] = []
-    for (const propName of Object.keys(this.form)) {
-      const editorName = `${propName}-prop-editor`
+    for (const propName of Object.keys(this.meta.props)) {
+      const editorName = `${this.meta.props[propName].type}-prop-editor`
       if (Object.keys(editors).includes(editorName)) {
         items.push(
           h(editorName, {
-            props: { value: this.form[propName], title: this.meta.props[propName].title },
+            props: {
+              value: this.form?.[propName],
+              title: this.meta.props[propName].title,
+            },
             on: {
               change: value => this.changeForm(propName, value),
             },

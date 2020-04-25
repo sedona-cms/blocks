@@ -36,7 +36,7 @@ export default Vue.extend({
       return
     }
     this.$store.registerModule('admin/blocks', adminModule, { preserveState: false })
-    this.$store.commit('admin/blocks/load', { blocks: this.blocks })
+    this.$store.commit('admin/blocks/load', { blocks: this.blocks, meta: this.$blocks.meta })
 
     this.$store.subscribe((mutation, state) => {
       if (!mutation.type.startsWith('admin/blocks')) {
