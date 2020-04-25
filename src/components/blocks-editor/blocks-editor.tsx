@@ -29,16 +29,17 @@ export default Vue.extend({
   data() {
     return {
       isPaletteOpen: false as boolean,
+      unsubscribe: undefined as Function | undefined,
     }
   },
   created(): void {
-    if (this.$store.hasModule('admin/blocks')) {
-      return
+    if (!this.$store.hasModule('admin/blocks')) {
+      this.$store.registerModule('admin/blocks', adminModule, { preserveState: false })
     }
-    this.$store.registerModule('admin/blocks', adminModule, { preserveState: false })
+
     this.$store.commit('admin/blocks/load', { blocks: this.blocks, meta: this.$blocks.meta })
 
-    this.$store.subscribe((mutation, state) => {
+    this.unsubscribe = this.$store.subscribe((mutation, state) => {
       if (!mutation.type.startsWith('admin/blocks')) {
         return
       }
@@ -49,6 +50,13 @@ export default Vue.extend({
     })
   },
   beforeDestroy(): void {
+    // @ts-ignore
+    if (module?.hot?.active === false) {
+      return
+    }
+    if (typeof this.unsubscribe === 'function') {
+      this.unsubscribe()
+    }
     this.$store.unregisterModule('admin/blocks')
   },
   methods: {
@@ -61,6 +69,7 @@ export default Vue.extend({
         component: blockMeta.name,
         props: {},
       }
+
       for (const propMetaName of Object.keys(blockMeta.props)) {
         // @ts-ignore
         block.props[propMetaName] = blockMeta.props[propMetaName].default

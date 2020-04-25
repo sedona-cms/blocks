@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import cloneDeep from 'lodash/cloneDeep'
 import { generateId } from '@sedona-cms/core/lib/utils/nanoid'
-import { BlockData } from '../../../types'
 import { BlockMeta } from '@sedona-cms/blocks-meta-loader'
+import { BlockData } from '../../../types'
 
 export const adminModule = {
   namespaced: true,
