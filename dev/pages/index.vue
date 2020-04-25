@@ -1,6 +1,6 @@
 <template>
   <div>
-    Home Page
+    <h1>Home Page</h1>
     <br />
     <template v-if="page">
       <the-blocks :blocks="page.content" />

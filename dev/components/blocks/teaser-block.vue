@@ -1,7 +1,6 @@
 <template>
-  <div>
-    Teaser block
-    <br />
+  <div class="block">
+    <h2>TeaserBlock</h2>
     <strong>Caption:</strong> {{ caption }}
     <br />
     <strong>Variant:</strong> {{ variant }}
@@ -23,6 +22,14 @@
     },
   }
 </script>
+
+<style scoped>
+  .block {
+    border: 1px solid blue;
+    padding: 20px;
+    margin-bottom: 15px;
+  }
+</style>
 
 <block>
   {

@@ -1,5 +1,8 @@
 <template>
-  <div>Text block says: {{ text }}</div>
+  <div class="block">
+    <h2>TextBlock</h2>
+    Text block says: {{ text }}
+  </div>
 </template>
 
 <script>
@@ -13,6 +16,14 @@
     },
   }
 </script>
+
+<style scoped>
+  .block {
+    border: 1px solid red;
+    padding: 20px;
+    margin-bottom: 15px;
+  }
+</style>
 
 <block>
 {
