@@ -60,7 +60,7 @@ export const adminModule = {
       state.items.push({
         id: generateId(),
         component: block.component,
-        props: block.props,
+        props: cloneDeep(block.props),
       })
     },
     remove(state, { id }: { id: string }): void {
