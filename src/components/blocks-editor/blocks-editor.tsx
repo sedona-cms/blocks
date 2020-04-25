@@ -37,6 +37,16 @@ export default Vue.extend({
     }
     this.$store.registerModule('admin/blocks', adminModule, { preserveState: false })
     this.$store.commit('admin/blocks/load', { blocks: this.blocks })
+
+    this.$store.subscribe((mutation, state) => {
+      if (!mutation.type.startsWith('admin/blocks')) {
+        return
+      }
+      const event = mutation.type.replace('admin/blocks/', '')
+
+      this.$emit(event, mutation.payload)
+      this.$emit('change', state['admin/blocks'].items)
+    })
   },
   beforeDestroy(): void {
     this.$store.unregisterModule('admin/blocks')
@@ -62,6 +72,9 @@ export default Vue.extend({
     },
     changeBlockProp(id: string, propName: string, value: any): void {
       this.$store.commit('admin/blocks/changeProp', { id, propName, value })
+    },
+    removeBlock({ id }: { id: string }): void {
+      this.$store.commit('admin/blocks/remove', { id })
     },
   },
   render(): VNode {
@@ -101,7 +114,7 @@ export default Vue.extend({
           form={blockData.props || {}}
           on-change={({ propName, value }) => this.changeBlockProp(blockData.id, propName, value)}
           on-clone={({ id }) => this.cloneBlock(id)}
-          on-remove={({ id }) => this.$store.commit('remove', { id })}
+          on-remove={this.removeBlock}
         />
       )
     }

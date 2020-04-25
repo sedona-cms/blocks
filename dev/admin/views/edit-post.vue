@@ -1,6 +1,6 @@
 <template>
   <div>
-    <blocks-editor v-if="page" :blocks="page.content" />
+    <blocks-editor v-if="page" :blocks="page.content" @change="updatePage" />
   </div>
 </template>
 
@@ -15,6 +15,11 @@
     computed: {
       page() {
         return this.$store.getters.pageBySlug('index')
+      },
+    },
+    methods: {
+      updatePage(blocks) {
+        this.$store.commit('SET_PAGE_CONTENT', { slug: 'index', blocks })
       },
     },
   }

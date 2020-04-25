@@ -7,14 +7,17 @@ export const getters = {
 }
 
 export const mutations = {
-  ADD_PAGE(state, { slug, page }) {
+  SET_PAGE(state, { slug, page }) {
     state.pages[slug] = page
+  },
+  SET_PAGE_CONTENT(state, { slug, blocks = [] }) {
+    state.pages[slug]['content'] = [...blocks]
   },
 }
 
 export const actions = {
   async loadPage({ commit }, { slug }) {
     const page = await this.$http.$get(`data/${slug}.json`)
-    commit('ADD_PAGE', { slug, page })
+    commit('SET_PAGE', { slug, page })
   },
 }
