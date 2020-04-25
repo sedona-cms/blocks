@@ -23,14 +23,14 @@ export const adminModule = {
         if (typeof block.props !== 'object') {
           block.props = {}
           for (const propMeta of Object.keys(blockMeta.props)) {
-            block.props[propMeta] = blockMeta.props[propMeta].default
+            block.props[propMeta] = undefined
           }
         }
         // check for exists each prop in block data
         else {
           for (const propMeta of Object.keys(blockMeta.props)) {
             if (!Object.keys(block.props).includes(propMeta)) {
-              block.props[propMeta] = blockMeta.props[propMeta].default
+              block.props[propMeta] = undefined
             }
           }
         }
