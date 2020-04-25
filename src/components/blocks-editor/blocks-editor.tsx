@@ -6,7 +6,12 @@ import { BlockMeta } from '@sedona-cms/blocks-meta-loader'
 import { BlocksPalette } from '../blocks-palette'
 import { BlockData } from '../../types'
 import BlocksEditorItem from './blocks-editor-item'
-import { store } from './store'
+import { adminModule } from './store'
+
+// store.subscribe((mutation, state) => {
+//  console.log(mutation.type)
+//  console.log(mutation.payload)
+// })
 
 export default Vue.extend({
   name: 'BlocksEditor',
@@ -27,7 +32,14 @@ export default Vue.extend({
     }
   },
   created(): void {
-    store.commit('load', { blocks: this.blocks })
+    if (this.$store.hasModule('admin/blocks')) {
+      return
+    }
+    this.$store.registerModule('admin/blocks', adminModule, { preserveState: false })
+    this.$store.commit('admin/blocks/load', { blocks: this.blocks })
+  },
+  beforeDestroy(): void {
+    this.$store.unregisterModule('admin/blocks')
   },
   methods: {
     addBlock(blockMeta: BlockMeta): void {
@@ -43,13 +55,13 @@ export default Vue.extend({
         // @ts-ignore
         block.props[propMetaName] = blockMeta.props[propMetaName].default
       }
-      store.commit('add', { block })
+      this.$store.commit('admin/blocks/add', { block })
     },
     cloneBlock(id: string): void {
-      store.commit('clone', { id })
+      this.$store.commit('admin/blocks/clone', { id })
     },
     changeBlockProp(id: string, propName: string, value: any): void {
-      store.commit('changeProp', { id, propName, value })
+      this.$store.commit('admin/blocks/changeProp', { id, propName, value })
     },
   },
   render(): VNode {
@@ -76,7 +88,7 @@ export default Vue.extend({
     )
 
     const items = new Set<VNode>()
-    for (const blockData of store.state.items) {
+    for (const blockData of this.$store.state['admin/blocks'].items as BlockData[]) {
       if (!this.$blocks.existsBlock(blockData.component)) {
         console.warn(`Block with name ${blockData.component} not exists in project`)
         continue
@@ -89,7 +101,7 @@ export default Vue.extend({
           form={blockData.props || {}}
           on-change={({ propName, value }) => this.changeBlockProp(blockData.id, propName, value)}
           on-clone={({ id }) => this.cloneBlock(id)}
-          on-remove={({ id }) => store.commit('remove', { id })}
+          on-remove={({ id }) => this.$store.commit('remove', { id })}
         />
       )
     }
