@@ -2,3 +2,5 @@
 node_modules/
 lib/
 types/generated/
+
+src/templates/blocks-plugin.js

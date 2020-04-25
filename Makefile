@@ -12,9 +12,12 @@ build-ts-prod: lint
 copy-css:
 	cd ./src && find . -name '*.css' | cpio -pdm ./../lib
 
-build-dev: build-ts-dev
+copy-js-templates:
+	cp -f src/templates/blocks-plugin.js lib/templates/blocks-plugin.js
 
-build-prod: build-ts-prod copy-css
+build-dev: build-ts-dev copy-js-templates
+
+build-prod: build-ts-prod copy-css copy-js-templates
 
 watch: build-dev
 	npx tsc-watch --onSuccess 'make -f Makefile copy-css'

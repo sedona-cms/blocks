@@ -3,11 +3,11 @@ import { Context } from '@nuxt/types'
 import { eventBus } from '@sedona-cms/core'
 import { BlockMeta } from '@sedona-cms/blocks-meta-loader'
 
-interface Asd {
+interface ModuleOptions {
   blocks: BlockMeta[]
 }
 
-const options: Asd = JSON.parse('<%= JSON.stringify(options) %>')
+// const options: ModuleOptions = JSON.parse('<%= JSON.stringify(options) %>')
 
 export default async function (context: Context, inject: Function): Promise<void> {
   eventBus.on('sedona:loaded', async () => {

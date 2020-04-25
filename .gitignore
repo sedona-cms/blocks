@@ -4,7 +4,7 @@ dev/.nuxt/
 lib/
 
 types/
-!types/config/
+!types/config.d.ts
 !types/vue.d.ts
 
 .DS_Store

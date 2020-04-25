@@ -2,9 +2,9 @@
   <div>
     Teaser block
     <br />
-    <b>Caption:</b> {{ caption }}
+    <strong>Caption:</strong> {{ caption }}
     <br />
-    <b>Variant:</b> {{ variant }}
+    <strong>Variant:</strong> {{ variant }}
   </div>
 </template>
 

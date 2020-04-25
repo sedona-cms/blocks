@@ -12,13 +12,10 @@
     components: {
       BlocksEditor,
     },
-    data() {
-      return {
-        page: null,
-      }
-    },
-    async mounted() {
-      this.page = await this.$http.$get('data/index.json')
+    computed: {
+      page() {
+        return this.$store.getters.pageBySlug('index')
+      },
     },
   }
 </script>

@@ -13,17 +13,28 @@ export const meta = require('../package.json')
 const blocksModule: Module<ModuleConfig> = async function (moduleOptions) {
   const defaultOptions: ModuleConfig = {
     blocksDir: path.resolve(this.options.srcDir || process.cwd(), 'components/blocks'),
+    blocksAlias: '~/components/blocks',
   }
-  moduleOptions = Object.assign({}, moduleOptions, defaultOptions)
+  const options = Object.assign({}, moduleOptions, defaultOptions)
+
+  // @ts-ignore
+  if (Array.isArray(this.options.build.transpile)) {
+    // @ts-ignore
+    this.options.build.transpile.push(meta.name)
+  } else {
+    // @ts-ignore
+    this.options.build.transpile = [meta.name]
+  }
 
   console.time('loading blocks')
-  if (!fs.existsSync(moduleOptions.blocksDir)) {
-    return Promise.reject(`No block directory in ${moduleOptions.blocksDir}`)
+  if (!fs.existsSync(options.blocksDir)) {
+    return Promise.reject(`No block directory in ${options.blocksDir}`)
   }
 
   /// Load blocks meta
   const loader = new BlocksMetaLoader()
-  const blocksMeta = await loader.getMetaFromDirectory(moduleOptions.blocksDir)
+  const blocksMeta = await loader.getMetaFromDirectory(options.blocksDir)
+  blocksMeta.map(item => (item.path = `${options.blocksAlias}/${item.path}`))
 
   const groupedBlocksFunc = flow([
     () => orderBy(blocksMeta, 'name'),
@@ -44,12 +55,28 @@ const blocksModule: Module<ModuleConfig> = async function (moduleOptions) {
     },
   })
 
+  this.addTemplate({
+    src: path.resolve(__dirname, 'templates/blocks-plugin.js'),
+    fileName: path.join('admin/blocks', 'blocks-plugin.js'),
+    options: {
+      blocks: blocksMeta,
+    },
+  })
+
   // Plugins
 
   this.addPlugin({
     src: path.resolve(__dirname, 'templates/plugin.js'),
     fileName: path.join('admin/blocks', 'plugin.js'),
     mode: 'client',
+    options: {
+      blocks: blocksMeta,
+    },
+  })
+
+  this.addPlugin({
+    src: path.resolve(__dirname, 'templates/blocks-plugin.js'),
+    fileName: path.join('admin/blocks', 'blocks-plugin.js'),
     options: {
       blocks: blocksMeta,
     },
