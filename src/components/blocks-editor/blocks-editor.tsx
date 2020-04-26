@@ -174,7 +174,7 @@ export default mixins(historyMixin).extend({
       <div class="fit relative-position">
         {toolbar}
         <blocks-palette ref="palette" on-add-block={({ block }) => this.addBlock(block)} />
-        <q-list dark={true}>
+        <q-list dark={true} style="padding-bottom:120px">
           <draggable
             animation={200}
             group="description"
