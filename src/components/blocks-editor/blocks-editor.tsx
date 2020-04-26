@@ -1,7 +1,8 @@
 import './../prop-editors'
-import Vue, { VNode, PropType } from 'vue'
+import { VNode, PropType } from 'vue'
 import Draggable from 'vuedraggable'
 import mixins from 'vue-typed-mixins'
+import cloneDeep from 'lodash/cloneDeep'
 import { generateId } from '@sedona-cms/core/lib/utils/nanoid'
 import { BlockMeta } from '@sedona-cms/blocks-meta-loader'
 import { BlocksPalette } from '../blocks-palette'
@@ -29,6 +30,9 @@ export default mixins(historyMixin).extend({
     return {
       isPaletteOpen: false as boolean,
       unsubscribe: undefined as Function | undefined,
+      unwatch: undefined as Function | undefined,
+      items: [] as BlockData[],
+      drag: false as boolean,
     }
   },
   created(): void {
@@ -49,6 +53,13 @@ export default mixins(historyMixin).extend({
     })
 
     this.$store.commit('admin/blocks/load', { blocks: this.blocks, meta: this.$blocks.meta })
+    this.items = cloneDeep(this.$store.state['admin/blocks'].items as BlockData[])
+
+    this.unwatch = this.$store.watch(
+      state => state['admin/blocks'].items,
+      items => (this.items = items),
+      { deep: true }
+    )
   },
   beforeDestroy(): void {
     // @ts-ignore
@@ -57,6 +68,9 @@ export default mixins(historyMixin).extend({
     }
     if (typeof this.unsubscribe === 'function') {
       this.unsubscribe()
+    }
+    if (typeof this.unwatch === 'function') {
+      this.unwatch()
     }
     this.$store.unregisterModule('admin/blocks')
   },
@@ -90,6 +104,14 @@ export default mixins(historyMixin).extend({
     },
     save(): void {
       this.$emit('save', { blocks: this.$store.state['admin/blocks'].items })
+    },
+    reorder(items: BlockData[]): void {
+      this.items = items
+      const ids: string[] = []
+      for (const item of this.items) {
+        ids.push(item.id)
+      }
+      this.$store.commit('admin/blocks/reorder', { ids })
     },
     expandAll(): void {
       this.$root.$emit('blocks:expand-all')
@@ -151,13 +173,13 @@ export default mixins(historyMixin).extend({
       </q-toolbar>
     )
 
-    const items = new Set<VNode>()
-    for (const blockData of this.$store.state['admin/blocks'].items as BlockData[]) {
+    const items: VNode[] = []
+    for (const blockData of this.items) {
       if (!this.$blocks.existsBlock(blockData.component)) {
         console.warn(`Block with name ${blockData.component} not exists in project`)
         continue
       }
-      items.add(
+      items.push(
         <blocks-editor-item
           key={blockData.id}
           id={blockData.id}
@@ -176,12 +198,15 @@ export default mixins(historyMixin).extend({
         <blocks-palette ref="palette" on-add-block={({ block }) => this.addBlock(block)} />
         <q-list dark={true} style="padding-bottom:120px">
           <draggable
+            value={this.items}
             animation={200}
             group="description"
             disabled={false}
-            on-end={item => console.log(item)}>
-            <transition-group type="transition" name="flip-list">
-              {[...items]}
+            on-start={() => (this.drag = true)}
+            on-end={() => (this.drag = false)}
+            on-input={this.reorder}>
+            <transition-group type="transition" name={!this.drag ? 'flip-list' : null}>
+              {...items}
             </transition-group>
           </draggable>
         </q-list>

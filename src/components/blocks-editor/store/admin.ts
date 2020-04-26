@@ -11,6 +11,11 @@ export const adminModule = {
       items: [],
     }
   },
+  getters: {
+    items(state): BlockData[] {
+      return state.items
+    },
+  },
   mutations: {
     load(state, { blocks, meta }: { blocks: BlockData[]; meta: BlockMeta[] }): void {
       const result = cloneDeep(blocks)
@@ -79,6 +84,19 @@ export const adminModule = {
       if (index > -1) {
         state.items.splice(index, 1)
       }
+    },
+    reorder(state, { ids }: { ids: string[] }): void {
+      state.items.sort((a: BlockData, b: BlockData) => {
+        const aOrder = ids.findIndex(item => item === a.id)
+        const bOrder = ids.findIndex(item => item === b.id)
+        if (aOrder < bOrder) {
+          return -1
+        }
+        if (bOrder < aOrder) {
+          return 1
+        }
+        return 0
+      })
     },
   },
 }

@@ -23,9 +23,6 @@
         type: Number,
         default: 12,
       },
-      expired: {
-        type: Date,
-      },
     },
   }
 </script>
