@@ -65,16 +65,18 @@ export default mixins(historyMixin).extend({
       if (blockMeta.name === undefined) {
         throw new TypeError('Component name not provided')
       }
+
+      const props = {}
+      for (const propMetaName of Object.keys(blockMeta.props)) {
+        props[propMetaName] = blockMeta.props[propMetaName].default
+      }
+
       const block: BlockData = {
         id: generateId(),
         component: blockMeta.name,
-        props: {},
+        props,
       }
 
-      for (const propMetaName of Object.keys(blockMeta.props)) {
-        // @ts-ignore
-        block.props[propMetaName] = blockMeta.props[propMetaName].default
-      }
       this.$store.commit('admin/blocks/add', { block })
     },
     cloneBlock(id: string): void {
