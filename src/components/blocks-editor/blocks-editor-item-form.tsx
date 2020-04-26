@@ -42,7 +42,7 @@ export default Vue.extend({
 
     const items: VNode[] = []
     for (const propName of Object.keys(this.meta.props)) {
-      const editorName = `${this.meta.props[propName].type}-prop-editor`
+      const editorName = `${this.meta.props[propName].editor}-prop-editor`
       if (Object.keys(editors).includes(editorName)) {
         items.push(
           h(editorName, {
@@ -60,7 +60,7 @@ export default Vue.extend({
 
     return (
       <q-card class="bg-grey-9 q-pa-md" flat={true}>
-        {[...items]}
+        <div class="q-gutter-md">{[...items]}</div>
       </q-card>
     )
   },

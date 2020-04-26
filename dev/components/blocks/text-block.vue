@@ -1,7 +1,9 @@
 <template>
-  <div class="block">
+  <div class="block" :class="{ dark: isDark }">
     <h2>TextBlock</h2>
     Text block says: {{ text }}
+    <br />
+    <p v-html="content" />
   </div>
 </template>
 
@@ -13,6 +15,14 @@
         type: String,
         default: '',
       },
+      content: {
+        type: String,
+        default: '',
+      },
+      isDark: {
+        type: Boolean,
+        default: false,
+      },
     },
   }
 </script>
@@ -23,6 +33,11 @@
     padding: 20px;
     margin-bottom: 15px;
   }
+
+  .dark {
+    background: #7f828b;
+    color: #f5f5f5;
+  }
 </style>
 
 <block>
@@ -30,11 +45,8 @@
   "name": "Text",
   "description": "Block for rendering text",
   "props": {
-    "text": {
-      "type": "text"
-    },
-    "isDark": {
-      "type": "checkbox"
+    "content": {
+      "type": "textarea"
     }
   }
 }

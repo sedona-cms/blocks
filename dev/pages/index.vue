@@ -10,6 +10,7 @@
 
 <script>
   import { TheBlocks } from '@sedona-cms/blocks/lib/components'
+  import page from '~/assets/data/index.json'
 
   export default {
     name: 'IndexPage',
@@ -21,8 +22,8 @@
         return this.$store.getters.pageBySlug('index')
       },
     },
-    async fetch(ctx) {
-      await ctx.store.dispatch('loadPage', { slug: 'index' })
+    created() {
+      this.$store.commit('SET_PAGE', { slug: 'index', page })
     },
   }
 </script>

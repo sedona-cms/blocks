@@ -1,26 +1,23 @@
-import Vue, { VNode, PropType } from 'vue'
+import { VNode, PropType } from 'vue'
+import mixins from 'vue-typed-mixins'
+import { propEditorMixin } from './mixins/prop-editor-mixin'
 
-export default Vue.extend({
+export default mixins(propEditorMixin).extend({
   name: 'TextPropEditor',
-  functional: true,
   props: {
     value: {
       type: String as PropType<string>,
-      default: '',
-    },
-    title: {
-      type: String as PropType<string>,
-      default: '',
+      required: true,
     },
   },
-  render(_h, { props, listeners }): VNode {
+  render(): VNode {
     return (
       <q-input
         outlined={true}
         dark={true}
-        value={props.value}
-        label={props.title}
-        on-input={listeners['change']}
+        value={this.value}
+        label={this.title}
+        on-input={(value: string) => this.$emit('change', value)}
       />
     )
   },

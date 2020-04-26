@@ -1,7 +1,7 @@
 <template>
   <div class="block">
     <h2>TeaserBlock</h2>
-    <strong>Caption:</strong> {{ caption }}
+    <p :style="{ fontSize: `${fontSize}px` }"><strong>Caption:</strong> {{ caption }}</p>
     <br />
     <strong>Variant:</strong> {{ variant }}
   </div>
@@ -19,6 +19,13 @@
         type: String,
         default: 'red',
       },
+      fontSize: {
+        type: Number,
+        default: 12,
+      },
+      expired: {
+        type: Date,
+      },
     },
   }
 </script>
@@ -32,17 +39,15 @@
 </style>
 
 <block>
-  {
-    "name": "Teaser block",
-    "description": "Teaser block",
-    "icon": "image",
-    "props": {
-      "caption": {
-      "type": "text",
+{
+  "name": "Teaser block",
+  "description": "Teaser block",
+  "icon": "image",
+  "props": {
+    "caption": {
       "default": "default text"
     },
     "variant": {
-      "type": "radio-group",
       "title": "Variants",
       "default": "red",
       "options": {
@@ -53,6 +58,6 @@
         ]
       }
     }
-    }
   }
+}
 </block>
