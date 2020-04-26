@@ -91,6 +91,12 @@ export default mixins(historyMixin).extend({
     save(): void {
       this.$emit('save', { blocks: this.$store.state['admin/blocks'].items })
     },
+    expandAll(): void {
+      this.$root.$emit('blocks:expand-all')
+    },
+    collapseAll(): void {
+      this.$root.$emit('blocks:collapse-all')
+    },
   },
   render(): VNode {
     const toolbar = (
@@ -114,6 +120,24 @@ export default mixins(historyMixin).extend({
           <q-tooltip>Redo</q-tooltip>
         </q-btn>
         <q-separator inset={true} spaced={true} vertical={true} />
+        <q-btn
+          icon="unfold_more"
+          round={true}
+          dense={true}
+          flat={true}
+          disable={this.blocks.length === 0}
+          on-click={this.expandAll}>
+          <q-tooltip>Expand all</q-tooltip>
+        </q-btn>
+        <q-btn
+          icon="unfold_less"
+          round={true}
+          dense={true}
+          flat={true}
+          disable={this.blocks.length === 0}
+          on-click={this.collapseAll}>
+          <q-tooltip>Collapse all</q-tooltip>
+        </q-btn>
         <q-separator />
         <q-btn
           icon="add"

@@ -35,6 +35,12 @@ export default Vue.extend({
       return result
     },
   },
+  mounted(): void {
+    // @ts-ignore
+    this.$root.$on('blocks:expand-all', () => this.$refs['blockItem'].show())
+    // @ts-ignore
+    this.$root.$on('blocks:collapse-all', () => this.$refs['blockItem'].hide())
+  },
   methods: {
     removeCancelClick(event: Event): void {
       event.stopPropagation()
@@ -113,11 +119,11 @@ export default Vue.extend({
 
     return (
       <q-expansion-item
+        ref="blockItem"
         icon={this.meta.icon}
         class={['admin-block-item', 'bg-grey-8', 'text-white']}
         denseToggle={false}
         defaultOpened={false}
-        group="blocks"
         scopedSlots={{
           header: () => [
             ...(this.showRemoveConfirm
