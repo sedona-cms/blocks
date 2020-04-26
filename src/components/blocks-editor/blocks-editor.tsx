@@ -7,6 +7,7 @@ import { BlockMeta } from '@sedona-cms/blocks-meta-loader'
 import { BlocksPalette } from '../blocks-palette'
 import { BlockData, MutationPayload } from '../../types'
 import BlocksEditorItem from './blocks-editor-item'
+import BlocksEditorSavePanel from './blocks-editor-save-panel'
 import { adminModule } from './store'
 import { historyMixin } from './mixins/history-mixin'
 
@@ -22,6 +23,7 @@ export default mixins(historyMixin).extend({
     Draggable,
     BlocksPalette,
     BlocksEditorItem,
+    BlocksEditorSavePanel,
   },
   data() {
     return {
@@ -84,6 +86,9 @@ export default mixins(historyMixin).extend({
     removeBlock({ id }: { id: string }): void {
       this.$store.commit('admin/blocks/remove', { id })
     },
+    save(): void {
+      this.$emit('save', { blocks: this.$store.state['admin/blocks'].items })
+    },
   },
   render(): VNode {
     const toolbar = (
@@ -140,7 +145,7 @@ export default mixins(historyMixin).extend({
     }
 
     return (
-      <div>
+      <div class="fit relative-position">
         {toolbar}
         <blocks-palette ref="palette" on-add-block={({ block }) => this.addBlock(block)} />
         <q-list dark={true}>
@@ -154,6 +159,7 @@ export default mixins(historyMixin).extend({
             </transition-group>
           </draggable>
         </q-list>
+        <blocks-editor-save-panel on-save={this.save} />
       </div>
     )
   },
