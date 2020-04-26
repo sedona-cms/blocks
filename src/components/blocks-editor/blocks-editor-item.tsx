@@ -35,7 +35,7 @@ export default Vue.extend({
       return result
     },
   },
-  mounted(): void {
+  created(): void {
     // @ts-ignore
     this.$root.$on('blocks:expand-all', () => this.$refs['blockItem'].show())
     // @ts-ignore
