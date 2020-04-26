@@ -48,7 +48,8 @@
     "prettier": "^2.0.5",
     "sedona-components": "^4.10.3",
     "tsc-watch": "^4.2.3",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "vue-typed-mixins": "^0.2.0"
   },
   "husky": {
     "hooks": {

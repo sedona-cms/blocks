@@ -3,3 +3,8 @@ export type BlockData = {
   component: string
   props?: { [key: string]: any }
 }
+
+export type MutationPayload = {
+  type: string
+  payload: any
+}

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="block">
     Image block
   </div>
 </template>
@@ -9,6 +9,14 @@
     name: 'ImageBlock',
   }
 </script>
+
+<style scoped>
+  .block {
+    border: 1px solid green;
+    padding: 20px;
+    margin-bottom: 15px;
+  }
+</style>
 
 <block>
 {

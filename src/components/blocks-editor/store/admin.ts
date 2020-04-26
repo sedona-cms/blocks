@@ -37,6 +37,9 @@ export const adminModule = {
       }
       state.items = result
     },
+    clear(state): void {
+      state.items = []
+    },
     add(state, { block }: { block: BlockData }): void {
       Vue.set(state.items, state.items.length, block)
     },

@@ -1,19 +1,16 @@
 import './../prop-editors'
 import Vue, { VNode, PropType } from 'vue'
 import Draggable from 'vuedraggable'
+import mixins from 'vue-typed-mixins'
 import { generateId } from '@sedona-cms/core/lib/utils/nanoid'
 import { BlockMeta } from '@sedona-cms/blocks-meta-loader'
 import { BlocksPalette } from '../blocks-palette'
-import { BlockData } from '../../types'
+import { BlockData, MutationPayload } from '../../types'
 import BlocksEditorItem from './blocks-editor-item'
 import { adminModule } from './store'
+import { historyMixin } from './mixins/history-mixin'
 
-// store.subscribe((mutation, state) => {
-//  console.log(mutation.type)
-//  console.log(mutation.payload)
-// })
-
-export default Vue.extend({
+export default mixins(historyMixin).extend({
   name: 'BlocksEditor',
   props: {
     blocks: {
@@ -37,9 +34,7 @@ export default Vue.extend({
       this.$store.registerModule('admin/blocks', adminModule, { preserveState: false })
     }
 
-    this.$store.commit('admin/blocks/load', { blocks: this.blocks, meta: this.$blocks.meta })
-
-    this.unsubscribe = this.$store.subscribe((mutation, state) => {
+    this.unsubscribe = this.$store.subscribe((mutation: MutationPayload, state) => {
       if (!mutation.type.startsWith('admin/blocks')) {
         return
       }
@@ -47,7 +42,11 @@ export default Vue.extend({
 
       this.$emit(event, mutation.payload)
       this.$emit('change', state['admin/blocks'].items)
+
+      this.addToHistory(mutation)
     })
+
+    this.$store.commit('admin/blocks/load', { blocks: this.blocks, meta: this.$blocks.meta })
   },
   beforeDestroy(): void {
     // @ts-ignore
@@ -89,10 +88,22 @@ export default Vue.extend({
   render(): VNode {
     const toolbar = (
       <q-toolbar>
-        <q-btn icon="undo" round={true} dense={true} flat={true}>
+        <q-btn
+          icon="undo"
+          round={true}
+          dense={true}
+          flat={true}
+          disable={!this.canUndo}
+          on-click={this.undo}>
           <q-tooltip>Undo</q-tooltip>
         </q-btn>
-        <q-btn icon="redo" round={true} dense={true} flat={true}>
+        <q-btn
+          icon="redo"
+          round={true}
+          dense={true}
+          flat={true}
+          disable={!this.canRedo}
+          on-click={this.redo}>
           <q-tooltip>Redo</q-tooltip>
         </q-btn>
         <q-separator inset={true} spaced={true} vertical={true} />
