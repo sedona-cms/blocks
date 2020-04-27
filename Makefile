@@ -19,5 +19,12 @@ build-dev: build-ts-dev copy-js-templates
 
 build-prod: build-ts-prod copy-css copy-js-templates
 
+build-example:
+	npm ci
+	npx npm-self-link
+	make -f Makefile build-prod
+	DEPLOY_ENV=GH_PAGES npx nuxt generate dev --modern
+	cp -r dev/dist ./dist-docs
+
 watch: build-dev
 	npx tsc-watch --onSuccess 'make -f Makefile copy-css'

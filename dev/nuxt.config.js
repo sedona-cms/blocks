@@ -1,3 +1,5 @@
+const baseRoute = env => (env === 'GH_PAGES' ? '/blocks/' : '/')
+
 export default {
   rootDir: 'dev',
 
@@ -12,6 +14,10 @@ export default {
   plugins: [{ src: '~/plugins/admin', mode: 'client' }],
 
   // watch: ['../lib/*.js', '../lib/**/*.js']
+
+  router: {
+    base: baseRoute(process.env.DEPLOY_ENV),
+  },
 
   build: {
     extractCSS: true,

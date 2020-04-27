@@ -1,0 +1,18 @@
+name: Build Demo
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: JamesIves/github-pages-deploy-action@master
+        env:
+          ACCESS_TOKEN: ${{ secrets.access_token }}
+          BRANCH: gh-pages
+          FOLDER: 'dist-docs'
+          BUILD_SCRIPT: apt-get update && apt-get install -y cpio && make -f Makefile build-example

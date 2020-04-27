@@ -26,7 +26,7 @@
   "homepage": "https://github.com/sedona-cms/blocks#readme",
   "dependencies": {
     "@sedona-cms/blocks-meta-loader": "^1.2.3",
-    "@sedona-cms/core": "^1.0.9",
+    "@sedona-cms/core": "^1.0.10",
     "lodash": "^4.17.15",
     "vuedraggable": "^2.23.2"
   },
@@ -49,7 +49,8 @@
     "sedona-components": "^4.10.3",
     "tsc-watch": "^4.2.3",
     "typescript": "^3.8.3",
-    "vue-typed-mixins": "^0.2.0"
+    "vue-typed-mixins": "^0.2.0",
+    "web-streams-polyfill": "^2.1.1"
   },
   "husky": {
     "hooks": {
