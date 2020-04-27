@@ -46,7 +46,7 @@
   "description": "Block for rendering text",
   "props": {
     "content": {
-      "type": "textarea"
+      "editor": "textarea"
     }
   }
 }

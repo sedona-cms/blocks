@@ -1,5 +1,5 @@
 <template>
-  <div class="block">
+  <div class="block" :style="{ color: variant }">
     <h2>TeaserBlock</h2>
     <p :style="{ fontSize: `${fontSize}px` }"><strong>Caption:</strong> {{ caption }}</p>
     <br />
@@ -17,7 +17,7 @@
       },
       variant: {
         type: String,
-        default: 'red',
+        default: 'black',
       },
       fontSize: {
         type: Number,
