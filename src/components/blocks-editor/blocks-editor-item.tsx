@@ -36,10 +36,12 @@ export default Vue.extend({
     },
   },
   created(): void {
-    // @ts-ignore
-    this.$root.$on('blocks:expand-all', () => this.$refs['blockItem'].show())
-    // @ts-ignore
-    this.$root.$on('blocks:collapse-all', () => this.$refs['blockItem'].hide())
+    this.$root.$on('blocks:expand-all', this.expandItem)
+    this.$root.$on('blocks:collapse-all', this.collapseItem)
+  },
+  beforeDestroy(): void {
+    this.$root.$off('blocks:expand-all', this.expandItem)
+    this.$root.$off('blocks:collapse-all', this.collapseItem)
   },
   methods: {
     removeCancelClick(event: Event): void {
@@ -58,6 +60,18 @@ export default Vue.extend({
     },
     change({ propName, value }: { propName: string; value: any }): void {
       this.$emit('change', { propName, value })
+    },
+    expandItem(): void {
+      if (this.$refs['blockItem'] !== undefined) {
+        // @ts-ignore
+        this.$refs['blockItem'].show()
+      }
+    },
+    collapseItem(): void {
+      if (this.$refs['blockItem'] !== undefined) {
+        // @ts-ignore
+        this.$refs['blockItem'].hide()
+      }
     },
   },
   render(): VNode {
