@@ -2,6 +2,11 @@ import Vue, { VNode, PropType, CreateElement } from 'vue'
 import { BlockMeta } from '@sedona-cms/blocks-meta-loader'
 import { editors } from '../prop-editors'
 
+const getPropEditor = (componentPath: string): any => ({
+  component: import(`~/admin/props/${componentPath}`),
+  timeout: 600,
+})
+
 export default Vue.extend({
   name: 'BlocksEditorItemForm',
   props: {
@@ -17,6 +22,11 @@ export default Vue.extend({
       },
     },
   },
+  data() {
+    return {
+      customPropEditors: {} as { [key: string]: Function },
+    }
+  },
   computed: {
     meta(): BlockMeta {
       const result = this.$blocks.getBlock(this.component)
@@ -25,6 +35,19 @@ export default Vue.extend({
       }
       return result
     },
+  },
+  created(): void {
+    const propEditors: string[] = Object.keys(this.meta.props).map(
+      propName => this.meta.props[propName].editor ?? ''
+    )
+    const customEditors: string[] = propEditors.filter(item => {
+      const editorName = `${item}-prop-editor`
+      return !Object.keys(editors).includes(editorName)
+    })
+
+    for (const editor of customEditors) {
+      this.customPropEditors[editor] = () => getPropEditor(editor)
+    }
   },
   methods: {
     changeForm(propName: string, value: any): void {
@@ -42,20 +65,24 @@ export default Vue.extend({
 
     const items: VNode[] = []
     for (const propName of Object.keys(this.meta.props)) {
-      const editorName = `${this.meta.props[propName].editor}-prop-editor`
-      if (Object.keys(editors).includes(editorName)) {
-        items.push(
-          h(editorName, {
-            props: {
-              value: this.form?.[propName],
-              title: this.meta.props[propName].title,
-            },
-            on: {
-              change: value => this.changeForm(propName, value),
-            },
-          })
-        )
+      if (this.meta.props?.[propName].editor === undefined) continue
+
+      const editorName = this.meta.props?.[propName]?.editor || 'text'
+      let propEditor: string | Function = `${editorName}-prop-editor`
+      if (!Object.keys(editors).includes(propEditor)) {
+        propEditor = this.customPropEditors?.[editorName] || undefined
       }
+      items.push(
+        h(propEditor, {
+          props: {
+            value: this.form?.[propName],
+            title: this.meta.props[propName].title,
+          },
+          on: {
+            change: value => this.changeForm(propName, value),
+          },
+        })
+      )
     }
 
     return (

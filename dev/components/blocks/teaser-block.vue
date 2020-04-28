@@ -47,6 +47,7 @@
     "variant": {
       "title": "Variants",
       "default": "red",
+      "editor": "color",
       "options": {
         "variants": [
           "red",
