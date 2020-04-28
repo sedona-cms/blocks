@@ -24,6 +24,7 @@ export default Vue.extend({
   data() {
     return {
       showRemoveConfirm: false as boolean,
+      isFormLoad: false as boolean,
     }
   },
   computed: {
@@ -131,6 +132,14 @@ export default Vue.extend({
       </q-item-section>
     )
 
+    const form = this.isFormLoad ? (
+      <blocks-editor-item-form
+        component={this.component}
+        form={this.form}
+        on-change={this.change}
+      />
+    ) : undefined
+
     return (
       <q-expansion-item
         ref="blockItem"
@@ -144,12 +153,9 @@ export default Vue.extend({
               ? [removeConfirm]
               : [headerItemIcon, headerItemTitle, headerItemMenu]),
           ],
-        }}>
-        <blocks-editor-item-form
-          component={this.component}
-          form={this.form}
-          on-change={this.change}
-        />
+        }}
+        on-before-show={() => (this.isFormLoad = true)}>
+        {form}
       </q-expansion-item>
     )
   },
