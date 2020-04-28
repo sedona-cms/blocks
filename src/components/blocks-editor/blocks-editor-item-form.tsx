@@ -87,7 +87,7 @@ export default Vue.extend({
 
     return (
       <q-card class="bg-grey-9 q-pa-md" flat={true}>
-        <div class="q-gutter-md">{[...items]}</div>
+        <div class="q-gutter-md">{...items}</div>
       </q-card>
     )
   },

@@ -1,0 +1,15 @@
+.idea/
+.github/
+node_modules/
+dev/
+
+.gitignore
+.eslintignore
+.eslintrc.js
+.babelrc
+.prettierrc
+.DS_Store
+
+Makefile
+tsconfig.json
+tsconfig.build.json
