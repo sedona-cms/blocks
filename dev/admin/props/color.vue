@@ -2,7 +2,7 @@
   <q-field :label="title" outlined stack-label dark>
     <template v-slot:control>
       <div class="self-center full-width no-outline" tabindex="0">
-        <select v-model="color" class="full-width">
+        <select v-model="color" class="full-width text-black">
           <option value="red">Red</option>
           <option value="green">Green</option>
           <option value="blue">Blue</option>
