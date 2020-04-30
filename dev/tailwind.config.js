@@ -8,4 +8,15 @@ module.exports = {
   theme: {},
   variants: {},
   plugins: [],
+  purge: {
+    // Learn more on https://tailwindcss.com/docs/controlling-file-size/#removing-unused-css
+    enabled: process.env.NODE_ENV === 'production',
+    content: [
+      'dev/components/**/*.vue',
+      'dev/layouts/**/*.vue',
+      'dev/pages/**/*.vue',
+      'dev/plugins/**/*.js',
+      'dev/nuxt.config.js',
+    ],
+  },
 }

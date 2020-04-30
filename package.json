@@ -33,7 +33,7 @@
   "devDependencies": {
     "@nuxt/http": "^0.5.1",
     "@nuxt/types": "^0.7.5",
-    "@nuxtjs/tailwindcss": "^1.4.1",
+    "@nuxtjs/tailwindcss": "^2.0.0",
     "@sedona-cms/eslint-config": "^1.0.1",
     "@types/lodash": "^4.14.150",
     "@types/node": "^12.12.37",
@@ -41,7 +41,7 @@
     "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
     "@vue/babel-preset-jsx": "^1.1.2",
     "husky": "^4.2.3",
-    "lint-staged": "^10.2.0",
+    "lint-staged": "^10.2.1",
     "npm-self-link": "^1.1.7",
     "nuxt": "^2.12.0",
     "prettier": "^2.0.5",
