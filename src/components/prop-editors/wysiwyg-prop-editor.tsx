@@ -5,6 +5,7 @@ import { propEditorMixin } from './mixins/prop-editor-mixin'
 const toolbar = [
   ['left', 'center', 'right', 'justify'],
   ['bold', 'italic', 'strike', 'underline'],
+  ['fullscreen'],
 ]
 
 export default mixins(propEditorMixin).extend({
