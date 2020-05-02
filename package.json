@@ -26,7 +26,7 @@
   "homepage": "https://github.com/sedona-cms/blocks#readme",
   "dependencies": {
     "@sedona-cms/blocks-meta-loader": "^1.2.4",
-    "@sedona-cms/core": "^1.0.10",
+    "@sedona-cms/core": "^1.1.1",
     "lodash": "^4.17.15",
     "vuedraggable": "^2.23.2"
   },
@@ -41,7 +41,7 @@
     "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
     "@vue/babel-preset-jsx": "^1.1.2",
     "husky": "^4.2.3",
-    "lint-staged": "^10.2.1",
+    "lint-staged": "^10.2.2",
     "npm-self-link": "^1.1.7",
     "nuxt": "^2.12.0",
     "prettier": "^2.0.5",
