@@ -77,6 +77,7 @@ export default Vue.extend({
           props: {
             value: this.form?.[propName],
             title: this.meta.props[propName].title,
+            ...this.meta.props[propName].options,
           },
           on: {
             change: value => this.changeForm(propName, value),
