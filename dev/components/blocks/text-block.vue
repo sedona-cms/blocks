@@ -1,20 +1,18 @@
 <template>
-  <div class="block" :class="{ dark: isDark }">
-    <h2>TextBlock</h2>
-    Text block says: {{ text }}
-    <br />
-    <p v-html="content" />
-  </div>
+  <section
+    :class="{ 'bg-gray-700': isDark, 'text-white': isDark, 'text-gray-700': !isDark }"
+    class="body-font"
+  >
+    <div class="container px-5 py-24 mx-auto flex flex-col">
+      <p v-html="content" class="leading-relaxed text-lg mb-4" />
+    </div>
+  </section>
 </template>
 
 <script>
   export default {
     name: 'TextBlock',
     props: {
-      text: {
-        type: String,
-        default: '',
-      },
       content: {
         type: String,
         default: '',
@@ -41,13 +39,16 @@
 </style>
 
 <block>
-{
-  "name": "Text",
-  "description": "Block for rendering text",
-  "props": {
-    "content": {
-      "editor": "textarea"
+    {
+        "name": "Text",
+        "description": "Block for rendering text",
+        "props": {
+            "content": {
+                "editor": "wysiwyg",
+                "options": {
+                    "toolbar": [["left", "center", "right"], ["bold", "italic", "strike"], ["fullscreen"]]
+                }
+            }
+        }
     }
-  }
-}
 </block>

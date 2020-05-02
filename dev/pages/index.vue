@@ -8,7 +8,6 @@
 
 <script>
   import { TheBlocks } from '@sedona-cms/blocks/lib/components'
-  import page from '~/assets/data/index.json'
 
   export default {
     name: 'IndexPage',
@@ -19,9 +18,6 @@
       page() {
         return this.$store.getters.pageBySlug('index')
       },
-    },
-    created() {
-      this.$store.commit('SET_PAGE', { slug: 'index', page })
     },
   }
 </script>

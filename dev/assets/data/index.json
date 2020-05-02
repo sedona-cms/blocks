@@ -2,15 +2,20 @@
   "page": "Home Page",
   "content": [
     {
-      "id": "tdkjlizscl",
-      "component": "TextBlock",
+      "id": "bft0vr3xl2",
+      "component": "HeroBlock",
       "props": {
-        "text": "Hello, world!"
+        "title": "Before they sold out readymade gluten",
+        "excerpt": "Copper mug try-hard pitchfork pour-over freegan heirloom neutra air plant cold-pressed tacos poke beard tote bag. Heirloom echo park mlkshk tote bag selvage hot chicken authentic tumeric truffaut hexagon try-hard chambray.",
+        "showButtons": true
       }
     },
     {
-      "id": "bft0vr3xl2",
-      "component": "TeaserBlock"
+      "id": "tdkjlizscl",
+      "component": "TextBlock",
+      "props": {
+        "content": "Meggings portland fingerstache lyft, post-ironic fixie man bun banh mi umami everyday carry hexagon locavore direct trade art party. Locavore small batch listicle gastropub farm-to-table lumbersexual salvia messenger bag. Coloring book flannel truffaut craft beer drinking vinegar sartorial, disrupt fashion axe normcore meh butcher. Portland 90's scenester vexillologist forage post-ironic asymmetrical, chartreuse disrupt butcher paleo intelligentsia pabst before they sold out four loko. 3 wolf moon brooklyn."
+      }
     }
   ]
 }

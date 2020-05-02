@@ -2,10 +2,10 @@
   <header class="text-gray-700 body-font">
     <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
       <nav class="flex lg:w-2/5 flex-wrap items-center text-base md:ml-auto">
-        <a class="mr-5 hover:text-gray-900">First Link</a>
-        <a class="mr-5 hover:text-gray-900">Second Link</a>
-        <a class="mr-5 hover:text-gray-900">Third Link</a>
-        <a class="hover:text-gray-900">Fourth Link</a>
+        <nuxt-link to="/about" class="mr-5 hover:text-gray-900">About</nuxt-link>
+        <nuxt-link to="/posts" class="mr-5 hover:text-gray-900">Posts</nuxt-link>
+        <nuxt-link to="/products" class="mr-5 hover:text-gray-900">Products</nuxt-link>
+        <nuxt-link to="/contact" class="mr-5 hover:text-gray-900">Contact</nuxt-link>
       </nav>
       <nuxt-link
         to="/"
@@ -27,7 +27,8 @@
       </nuxt-link>
       <div class="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0">
         <button
-          class="inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0"
+          class="inline-flex items-center border-0 py-1 px-3 focus:outline-none bg-blue-500 hover:bg-blue-700 text-white font-bold mt-4 md:mt-0"
+          @click="load"
         >
           Try blocks
           <svg
@@ -50,5 +51,19 @@
 <script>
   export default {
     name: 'TheHeader',
+    data() {
+      return {
+        loading: false,
+      }
+    },
+    methods: {
+      async load() {
+        this.loading = true
+        window.history.pushState('', '', `${location.href}?loggedIn=true`)
+        await this.$adminLoader.load()
+        // this.isLogged = true
+        this.loading = false
+      },
+    },
   }
 </script>

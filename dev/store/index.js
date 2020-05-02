@@ -1,9 +1,18 @@
+import indexPage from '~/assets/data/index.json'
+import aboutPage from '~/assets/data/about.json'
+import contactPage from '~/assets/data/contact.json'
+
 export const state = () => ({
-  pages: {},
+  pages: {
+    index: indexPage,
+    about: aboutPage,
+    contact: contactPage,
+  },
 })
 
 export const getters = {
   pageBySlug: store => slug => store.pages[slug],
+  pageExists: store => slug => store.pages[slug] !== undefined,
 }
 
 export const mutations = {
@@ -15,9 +24,4 @@ export const mutations = {
   },
 }
 
-export const actions = {
-  async loadPage({ commit }, { slug }) {
-    const page = await this.$http.$get(`data/${slug}.json`)
-    commit('SET_PAGE', { slug, page })
-  },
-}
+export const actions = {}
