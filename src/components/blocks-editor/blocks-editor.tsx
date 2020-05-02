@@ -12,6 +12,8 @@ import BlocksEditorSavePanel from './blocks-editor-save-panel'
 import { adminModule } from './store'
 import { historyMixin } from './mixins/history-mixin'
 
+type editorStatus = 'new' | 'ready' | 'changed' | 'saved'
+
 export default mixins(historyMixin).extend({
   name: 'BlocksEditor',
   props: {
@@ -33,6 +35,7 @@ export default mixins(historyMixin).extend({
       unwatch: undefined as Function | undefined,
       items: [] as BlockData[],
       drag: false as boolean,
+      status: 'ready' as editorStatus,
     }
   },
   created(): void {
@@ -50,6 +53,10 @@ export default mixins(historyMixin).extend({
       this.$emit('change', state['admin/blocks'].items)
 
       this.addToHistory(mutation)
+
+      if (mutation.type !== 'admin/blocks/load') {
+        this.status = 'changed'
+      }
     })
 
     this.$store.commit('admin/blocks/load', { blocks: this.blocks, meta: this.$blocks.meta })
@@ -73,6 +80,15 @@ export default mixins(historyMixin).extend({
       this.unwatch()
     }
     this.$store.unregisterModule('admin/blocks')
+  },
+  mounted(): void {
+    this.$router.beforeEach((_to, _from, next) => {
+      if (this.status === 'changed') {
+        alert('Страница находится в режиме редактирования. Сохраните или отмените изменения')
+        return
+      }
+      next()
+    })
   },
   methods: {
     addBlock(blockMeta: BlockMeta): void {
@@ -104,6 +120,7 @@ export default mixins(historyMixin).extend({
     },
     save(): void {
       this.$emit('save', { blocks: this.$store.state['admin/blocks'].items })
+      this.status = 'saved'
     },
     reorder(items: BlockData[]): void {
       this.items = items
@@ -210,7 +227,7 @@ export default mixins(historyMixin).extend({
             </transition-group>
           </draggable>
         </q-list>
-        <blocks-editor-save-panel on-save={this.save} />
+        <blocks-editor-save-panel status={this.status} on-save={this.save} />
       </div>
     )
   },

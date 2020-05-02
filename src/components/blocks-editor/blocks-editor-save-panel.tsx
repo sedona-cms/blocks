@@ -1,10 +1,17 @@
-import Vue, { VNode } from 'vue'
+import Vue, { VNode, PropType } from 'vue'
+
+type editorStatus = 'new' | 'ready' | 'changed' | 'saved'
 
 export default Vue.extend({
   name: 'BlocksEditorSavePanel',
   functional: true,
-  props: {},
-  render(_h, { listeners }): VNode {
+  props: {
+    status: {
+      type: String as PropType<editorStatus>,
+      required: true,
+    },
+  },
+  render(_h, { listeners, props }): VNode {
     return (
       <div
         class="fixed-bottom full-width bg-grey-7 q-pa-md"
@@ -16,6 +23,9 @@ export default Vue.extend({
           class="full-width"
           on-click={listeners.save}
         />
+        <p class="text-grey-4 no-margin q-pa-sm" style="padding-left:0">
+          Status: {props.status}
+        </p>
       </div>
     )
   },
