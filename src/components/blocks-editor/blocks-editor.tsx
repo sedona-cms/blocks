@@ -141,7 +141,7 @@ export default mixins(historyMixin).extend({
           on-click={this.redo}>
           <q-tooltip>Redo</q-tooltip>
         </q-btn>
-        <q-separator inset={true} spaced={true} vertical={true} />
+        <q-separator dark={true} inset={true} spaced={true} vertical={true} />
         <q-btn
           icon="unfold_more"
           round={true}
@@ -160,7 +160,7 @@ export default mixins(historyMixin).extend({
           on-click={this.collapseAll}>
           <q-tooltip>Collapse all</q-tooltip>
         </q-btn>
-        <q-separator />
+        <q-separator color="grey-9" />
         <q-btn
           icon="add"
           color="primary"
