@@ -22,7 +22,7 @@
 {
   "name": "Image",
   "description": "Image block",
-  "group": "images",
+  "group": "media",
   "icon": "image"
 }
 </block>

@@ -6,6 +6,7 @@ import NumberPropEditor from './number-prop-editor'
 import TextareaPropEditor from './textarea-prop-editor'
 import DatePropEditor from './date-prop-editor'
 import WysiwygPropEditor from './wysiwyg-prop-editor'
+import { YoutubePropEditor } from './youtube-prop-editor'
 
 const editors = {
   'text-prop-editor': TextPropEditor,
@@ -14,6 +15,7 @@ const editors = {
   'textarea-prop-editor': TextareaPropEditor,
   'date-prop-editor': DatePropEditor,
   'wysiwyg-prop-editor': WysiwygPropEditor,
+  'youtube-prop-editor': YoutubePropEditor,
 }
 
 for (const editorName of Object.keys(editors)) {
