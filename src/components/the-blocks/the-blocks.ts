@@ -17,7 +17,7 @@ export default Vue.extend({
   render(h, { props }): VNode {
     const components = new Set<VNode>()
     for (const block of props.blocks) {
-      const component = h(block.component, { props: { ...block.props } })
+      const component = h(block.component, { props: { ...block.props }, key: block.id })
       components.add(component)
     }
     return h(props.tag, [...components])

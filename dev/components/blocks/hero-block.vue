@@ -48,6 +48,9 @@
       },
       showButtons: Boolean,
     },
+    mounted() {
+      console.log(this.$vnode.key)
+    },
   }
 </script>
 
