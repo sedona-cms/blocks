@@ -26,7 +26,7 @@
   "homepage": "https://github.com/sedona-cms/blocks#readme",
   "dependencies": {
     "@sedona-cms/blocks-meta-loader": "^1.2.5",
-    "@sedona-cms/core": "^1.2.6",
+    "@sedona-cms/core": "^1.3.2",
     "lodash": "^4.17.15",
     "vuedraggable": "^2.23.2"
   },
