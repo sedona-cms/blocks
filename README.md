@@ -6,7 +6,7 @@ Block editor for Sedona CMS
 
 ## Setup
 
-1. Add and setup `@sedona-cms/blocks`. [Setup instructions](https://github.com/sedona-cms/core#setup) 
+1. Add and setup `@sedona-cms/core`. [Setup instructions](https://github.com/sedona-cms/core#setup) 
 
 2. Add `@sedona-cms/blocks` dependency to your project
 
