@@ -7,7 +7,7 @@ export default Vue.extend({
   props: {
     blocks: {
       type: Array as PropType<BlockData[]>,
-      default: () => [],
+      required: true,
     },
     tag: {
       type: String as PropType<string>,
