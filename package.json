@@ -26,7 +26,7 @@
   "homepage": "https://github.com/sedona-cms/blocks#readme",
   "dependencies": {
     "@sedona-cms/blocks-meta-loader": "^1.2.6",
-    "@sedona-cms/core": "^1.4.1",
+    "@sedona-cms/core": "^1.4.3",
     "lodash": "^4.17.15",
     "vuedraggable": "^2.23.2"
   },
@@ -35,9 +35,9 @@
     "@nuxt/types": "^0.7.5",
     "@nuxtjs/tailwindcss": "^2.0.0",
     "@sedona-cms/eslint-config": "^1.0.1",
-    "@types/lodash": "^4.14.150",
+    "@types/lodash": "^4.14.151",
     "@types/node": "^12.12.39",
-    "@types/vuedraggable": "^2.23.0",
+    "@types/vuedraggable": "^2.23.1",
     "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
     "@vue/babel-preset-jsx": "^1.1.2",
     "husky": "^4.2.3",
