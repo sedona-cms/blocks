@@ -84,9 +84,6 @@ export default Vue.extend({
       <div class="blocks-palette bg-grey-9 shadow-5">
         <q-toolbar class="bg-grey-7">
           <q-toolbar-title>Select block</q-toolbar-title>
-          <q-btn flat={true} round={true} dense={true} on-click={this.hide}>
-            <q-icon name="arrow_back" />
-          </q-btn>
         </q-toolbar>
         <blocks-palette-search
           ref="searchInput"
