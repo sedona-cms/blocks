@@ -1,4 +1,4 @@
-import Vue, { VNode, PropType } from 'vue'
+import Vue, { VNode, PropType, CreateElement } from 'vue'
 import { BlockData } from '../../types'
 
 export default Vue.extend({
@@ -14,12 +14,13 @@ export default Vue.extend({
       default: 'div',
     },
   },
-  render(h, { props }): VNode {
+  render(h: CreateElement, { props }): VNode {
     const components = new Set<VNode>()
     for (const block of props.blocks) {
       const component = h(block.component, { props: { ...block.props }, key: block.id })
       components.add(component)
     }
+
     return h(props.tag, [...components])
   },
 })

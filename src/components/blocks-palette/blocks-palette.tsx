@@ -42,7 +42,7 @@ export default Vue.extend({
     this.toggleButton = document.querySelector('.toggle-button')
   },
   methods: {
-    show() {
+    show(): void {
       this.$el.setAttribute('style', 'left: 300px;')
       if (this.toggleButton !== null) {
         this.toggleButton.style.display = 'none'
@@ -51,7 +51,7 @@ export default Vue.extend({
       this.$refs.searchInput.focus()
       this.$emit('show')
     },
-    hide() {
+    hide(): void {
       // @ts-ignore
       this.$refs.searchInput.clear()
       this.$el.setAttribute('style', 'left: 0px;')
