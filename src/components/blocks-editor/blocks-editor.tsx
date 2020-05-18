@@ -9,6 +9,7 @@ import { BlocksPalette } from '../blocks-palette'
 import { BlockData, MutationPayload } from '../../types'
 import BlocksEditorItem from './blocks-editor-item'
 import BlocksEditorSavePanel from './blocks-editor-save-panel'
+import BlocksEditorToolbar from './blocks-editor-toolbar'
 import { adminModule } from './store'
 import { historyMixin } from './mixins/history-mixin'
 
@@ -27,6 +28,7 @@ export default mixins(historyMixin).extend({
     BlocksPalette,
     BlocksEditorItem,
     BlocksEditorSavePanel,
+    BlocksEditorToolbar,
   },
   data() {
     return {
@@ -138,58 +140,6 @@ export default mixins(historyMixin).extend({
     },
   },
   render(): VNode {
-    const toolbar = (
-      <q-toolbar>
-        <q-btn
-          icon="undo"
-          round={true}
-          dense={true}
-          flat={true}
-          disable={!this.canUndo}
-          on-click={this.undo}>
-          <q-tooltip>Undo</q-tooltip>
-        </q-btn>
-        <q-btn
-          icon="redo"
-          round={true}
-          dense={true}
-          flat={true}
-          disable={!this.canRedo}
-          on-click={this.redo}>
-          <q-tooltip>Redo</q-tooltip>
-        </q-btn>
-        <q-separator dark={true} inset={true} spaced={true} vertical={true} />
-        <q-btn
-          icon="unfold_more"
-          round={true}
-          dense={true}
-          flat={true}
-          disable={this.blocks.length === 0}
-          on-click={this.expandAll}>
-          <q-tooltip>Expand all</q-tooltip>
-        </q-btn>
-        <q-btn
-          icon="unfold_less"
-          round={true}
-          dense={true}
-          flat={true}
-          disable={this.blocks.length === 0}
-          on-click={this.collapseAll}>
-          <q-tooltip>Collapse all</q-tooltip>
-        </q-btn>
-        <q-separator color="grey-9" />
-        <q-btn
-          icon="add"
-          color="primary"
-          round={true}
-          dense={true}
-          size="md"
-          className="q-ml-sm"
-          on-click={() => (this.$refs['palette'] as any).show()}
-        />
-      </q-toolbar>
-    )
-
     const items: VNode[] = []
     for (const blockData of this.items) {
       if (!this.$blocks.existsBlock(blockData.component)) {
@@ -211,7 +161,17 @@ export default mixins(historyMixin).extend({
 
     return (
       <div class="fit relative-position">
-        {toolbar}
+        <blocks-editor-toolbar
+          can-undo={this.canUndo}
+          can-redo={this.canRedo}
+          blocks-count={this.blocks.length}
+          on-undo={this.undo}
+          on-redo={this.redo}
+          on-expand-all={this.expandAll}
+          on-collapse-all={this.collapseAll}
+          on-show-palette={() => (this.$refs['palette'] as any).show()}
+          on-hide-palette={() => (this.$refs['palette'] as any).hide()}
+        />
         <blocks-palette ref="palette" on-add-block={({ block }) => this.addBlock(block)} />
         <q-list dark={true} style="padding-bottom:120px">
           <draggable
