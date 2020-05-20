@@ -57,7 +57,7 @@ npm i @sedona-cms/blocks # or yarn add @sedona-cms/blocks
 
 ## Usage
 
-### Built In Prop Editors
+### Built-In Prop Editors
 
 1. Text
 2. Textarea
@@ -68,16 +68,16 @@ npm i @sedona-cms/blocks # or yarn add @sedona-cms/blocks
 
 ### Create own prop editor
 
-A prop editor is a simple vue component. All custom editors should be saved in `~/admin/props` directory.
+A prop editor is a simple Vue component. All custom editors should be saved in `~/admin/props` directory.
 
-In a prop editor component can using Quasar components.
+In a prop, the editor component can use Quasar components.
 
 #### Step by step guide
 
-1. Create vue component in `~/admin/props` directory
-2. Add required props: `title` and `value`
+1. Create a Vue component in `~/admin/props` directory
+2. Add required props: title and value
 3. The title prop can have an empty default value
-4. The value prop will be fill data from the editor
+4. The value prop will fill data from the editor
 5. For updating data in the editor send `change` event
 
 Example:
