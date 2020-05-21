@@ -38,6 +38,7 @@ Block editor for Sedona CMS
 ### Prerequisites
 
 * [Nuxt.js](https://nuxtjs.org/)
+* [Sedona CMS core](https://github.com/sedona-cms/core)
 
 ### Setup
 
@@ -132,17 +133,19 @@ Example:
 npm ci
 ```
 
-```bash
-npx npm-self-link # links the package in which it is run
-```
-
-2. Run watch process
+2. Link the package in which it is run
 
 ```bash
-npm run watch # typescript watch process
+npx npm-self-link
 ```
 
-3. Run nuxt project from `dev` directory
+3. Run watch process
+
+```bash
+npm run watch
+```
+
+4. Run nuxt project from `dev` directory
 
 ```bash
 npm run dev

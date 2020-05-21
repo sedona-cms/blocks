@@ -25,9 +25,10 @@
   },
   "homepage": "https://github.com/sedona-cms/blocks#readme",
   "dependencies": {
-    "@sedona-cms/blocks-meta-loader": "^1.2.7",
-    "@sedona-cms/core": "^1.4.3",
+    "@sedona-cms/blocks-meta-loader": "^1.2.8",
+    "@sedona-cms/core": "~1.4",
     "lodash": "^4.17.15",
+    "vue-typed-mixins": "^0.2.0",
     "vuedraggable": "^2.23.2"
   },
   "devDependencies": {
@@ -47,7 +48,6 @@
     "prettier": "^2.0.5",
     "tsc-watch": "^4.2.7",
     "typescript": "^3.9.3",
-    "vue-typed-mixins": "^0.2.0",
     "web-streams-polyfill": "^2.1.1"
   },
   "husky": {
