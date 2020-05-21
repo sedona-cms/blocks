@@ -8,6 +8,7 @@ dev/
 .eslintrc.js
 .babelrc
 .prettierrc
+.prettierignore
 .DS_Store
 
 Makefile
