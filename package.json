@@ -1,6 +1,6 @@
 {
   "name": "@sedona-cms/blocks",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Block editor for Sedona CMS",
   "main": "lib/index.js",
   "types": "types/index.d.ts",
