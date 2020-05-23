@@ -132,13 +132,16 @@ export default Vue.extend({
       </q-item-section>
     )
 
-    const form = this.isFormLoad ? (
-      <blocks-editor-item-form
-        component={this.component}
-        form={this.form}
-        on-change={this.change}
-      />
-    ) : undefined
+    let form: VNode | undefined
+    if (this.isFormLoad) {
+      form = (
+        <blocks-editor-item-form
+          component={this.component}
+          form={this.form}
+          on-change={this.change}
+        />
+      )
+    }
 
     return (
       <q-expansion-item
