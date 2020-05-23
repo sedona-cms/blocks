@@ -13,6 +13,8 @@ import BlocksEditorToolbar from './blocks-editor-toolbar'
 import { adminModule } from './store'
 import { historyMixin } from './mixins/history-mixin'
 
+import './blocks-editor.css'
+
 type editorStatus = 'new' | 'ready' | 'changed' | 'saved'
 
 export default mixins(historyMixin).extend({
@@ -52,7 +54,10 @@ export default mixins(historyMixin).extend({
       const event = mutation.type.replace('admin/blocks/', '')
 
       this.$emit(event, mutation.payload)
-      this.$emit('change', state['admin/blocks'].items)
+
+      if (event !== 'load') {
+        this.$emit('change', state['admin/blocks'].items)
+      }
 
       this.addToHistory(mutation)
 
