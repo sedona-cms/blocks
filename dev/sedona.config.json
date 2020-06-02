@@ -6,7 +6,8 @@
     {
       "title": "Edit Post",
       "type": "item",
-      "component": "views/edit-post"
+      "component": "views/edit-post",
+      "save": true
     }
   ]
 }
