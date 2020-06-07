@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@nuxt/http": "^0.5.2",
-    "@nuxt/types": "^0.7.6",
+    "@nuxt/types": "^0.7.8",
     "@nuxtjs/tailwindcss": "^2.0.0",
     "@sedona-cms/eslint-config": "^1.0.4",
     "@types/lodash": "^4.14.155",
