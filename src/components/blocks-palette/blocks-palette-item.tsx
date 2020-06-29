@@ -30,7 +30,7 @@ export default Vue.extend({
     const title = <q-item-label>{props.title}</q-item-label>
 
     return (
-      <q-item clickable={true} on-click={listeners.click}>
+      <q-item style="user-select: none;" clickable={true} on-click={listeners.click}>
         <q-item-section avatar={true}>
           <q-avatar icon={props.icon} color="grey-7" text-color="white" />
         </q-item-section>
