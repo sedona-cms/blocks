@@ -27,27 +27,27 @@
   "dependencies": {
     "@sedona-cms/blocks-meta-loader": "^1.2.8",
     "@sedona-cms/core": "^1.4.14",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "vue-typed-mixins": "^0.2.0",
-    "vuedraggable": "^2.23.2"
+    "vuedraggable": "^2.24.0"
   },
   "devDependencies": {
-    "@nuxt/http": "^0.5.3",
+    "@nuxt/http": "^0.5.7",
     "@nuxt/types": "^0.7.9",
     "@nuxtjs/tailwindcss": "^2.0.0",
-    "@sedona-cms/eslint-config": "^1.0.4",
-    "@types/lodash": "^4.14.155",
-    "@types/node": "^12.12.47",
+    "@sedona-cms/eslint-config": "^1.1.4",
+    "@types/lodash": "^4.14.157",
+    "@types/node": "^12.12.50",
     "@types/vuedraggable": "^2.23.1",
     "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
     "@vue/babel-preset-jsx": "^1.1.2",
     "husky": "^4.2.3",
-    "lint-staged": "^10.2.10",
+    "lint-staged": "^10.2.11",
     "npm-self-link": "^1.1.7",
-    "nuxt": "^2.12.0",
+    "nuxt": "^2.13.3",
     "prettier": "^2.0.5",
-    "tsc-watch": "^4.2.8",
-    "typescript": "^3.9.5",
+    "tsc-watch": "^4.2.9",
+    "typescript": "^3.9.6",
     "web-streams-polyfill": "^2.1.1"
   },
   "husky": {
