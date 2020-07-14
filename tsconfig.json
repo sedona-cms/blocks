@@ -18,8 +18,13 @@
     "importHelpers": true,
     "listFiles": false,
     "lib": ["ES6", "DOM", "DOM.Iterable"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
     "outDir": "./lib",
-    "typeRoots": ["./node_modules/@types", "./types"]
+    "types": ["@nuxt/types", "@sedona-cms/core/types"],
   },
-  "exclude": ["node_modules", "lib", "dev", "scripts", "src/templates/blocks-plugin.js"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*.ts", "tests/**/*.tsx"],
+  "exclude": ["node_modules"]
 }

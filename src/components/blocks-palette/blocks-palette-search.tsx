@@ -9,7 +9,7 @@ export default Vue.extend({
   },
   methods: {
     focus(): void {
-      ;(this.$refs['input'] as HTMLInputElement).focus()
+      (this.$refs['input'] as HTMLInputElement).focus()
     },
     clear(): void {
       this.search = ''

@@ -15,6 +15,7 @@ export default Vue.extend({
   data() {
     return {
       search: '' as string,
+      // eslint-disable-next-line unicorn/no-null
       toggleButton: null as HTMLElement | null,
     }
   },
@@ -47,13 +48,12 @@ export default Vue.extend({
       if (this.toggleButton !== null) {
         this.toggleButton.style.display = 'none'
       }
-      // @ts-ignore
-      this.$refs.searchInput.focus()
+
+      (this.$refs.searchInput as HTMLFormElement).focus()
       this.$emit('show')
     },
     hide(): void {
-      // @ts-ignore
-      this.$refs.searchInput.clear()
+      (this.$refs.searchInput as HTMLFormElement).clear()
       this.$el.setAttribute('style', 'left: 0px;')
       if (this.toggleButton !== null) {
         this.toggleButton.style.display = 'initial'

@@ -14,8 +14,11 @@ export default Vue.extend({
       required: true,
     },
     form: {
-      type: Object as PropType<{ [key: string]: any }>,
-      default: () => {},
+      type: Object as PropType<Record<string, unknown>>,
+      default: () => {
+        {
+        }
+      },
     },
   },
   components: {
@@ -59,18 +62,18 @@ export default Vue.extend({
     clone(): void {
       this.$emit('clone', { id: this.id })
     },
-    change({ propName, value }: { propName: string; value: any }): void {
+    change({ propName, value }: { propName: string; value: unknown }): void {
       this.$emit('change', { propName, value })
     },
     expandItem(): void {
       if (this.$refs['blockItem'] !== undefined) {
-        // @ts-ignore
+        // @ts-ignore @ToDo $refs fix
         this.$refs['blockItem'].show()
       }
     },
     collapseItem(): void {
       if (this.$refs['blockItem'] !== undefined) {
-        // @ts-ignore
+        // @ts-ignore @ToDo $refs fix
         this.$refs['blockItem'].hide()
       }
     },

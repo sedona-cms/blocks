@@ -1,5 +1,5 @@
 import Vue, { VNode, PropType, CreateElement } from 'vue'
-import { BlockData } from '../../types'
+import { BlockData } from '@/types'
 
 export default Vue.extend({
   name: 'TheBlocks',

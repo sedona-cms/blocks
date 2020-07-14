@@ -2,7 +2,9 @@ import Vue, { VNode, PropType, CreateElement } from 'vue'
 import { BlockMeta } from '@sedona-cms/blocks-meta-loader'
 import { editors } from '../prop-editors'
 
-const getPropEditor = (componentPath: string): any => ({
+type editorComponent = () => void
+
+const getPropEditor = (componentPath: string): unknown => ({
   component: import(`~/admin/props/${componentPath}`),
   timeout: 600,
 })
@@ -15,16 +17,19 @@ export default Vue.extend({
       required: true,
     },
     form: {
-      type: Object as PropType<{ [key: string]: any }>,
-      default: () => {},
-      validator(value: any): boolean {
+      type: Object as PropType<Record<string, unknown>>,
+      default: () => {
+        {
+        }
+      },
+      validator(value: Record<string, unknown>): boolean {
         return typeof value === 'object'
       },
     },
   },
   data() {
     return {
-      customPropEditors: {} as { [key: string]: Function },
+      customPropEditors: {} as Record<string, editorComponent>,
     }
   },
   computed: {
@@ -50,7 +55,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    changeForm(propName: string, value: any): void {
+    changeForm(propName: string, value: unknown): void {
       this.$emit('change', { propName, value })
     },
   },
@@ -68,7 +73,7 @@ export default Vue.extend({
       if (this.meta.props?.[propName].editor === undefined) continue
 
       const editorName = this.meta.props?.[propName]?.editor || 'text'
-      let propEditor: string | Function = `${editorName}-prop-editor`
+      let propEditor: string | editorComponent = `${editorName}-prop-editor`
       if (!Object.keys(editors).includes(propEditor)) {
         propEditor = this.customPropEditors?.[editorName] || undefined
       }

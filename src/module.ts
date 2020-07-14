@@ -7,7 +7,9 @@ import toPairs from 'lodash/toPairs'
 import fromPairs from 'lodash/fromPairs'
 import flow from 'lodash/flow'
 import { BlocksMetaLoader } from '@sedona-cms/blocks-meta-loader'
+import { ModuleConfig } from '@/types'
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 export const meta = require('../package.json')
 
 const blocksModule: Module<ModuleConfig> = async function (moduleOptions) {
@@ -17,13 +19,12 @@ const blocksModule: Module<ModuleConfig> = async function (moduleOptions) {
   }
   const options = Object.assign({}, moduleOptions, defaultOptions)
 
-  // @ts-ignore
-  if (Array.isArray(this.options.build.transpile)) {
-    // @ts-ignore
-    this.options.build.transpile.push(meta.name)
-  } else {
-    // @ts-ignore
-    this.options.build.transpile = [meta.name]
+  if (typeof this.options.build === 'object') {
+    if (Array.isArray(this.options.build.transpile)) {
+      this.options.build.transpile.push(meta.name)
+    } else {
+      this.options.build.transpile = [meta.name]
+    }
   }
 
   console.time('loading blocks')

@@ -1,21 +1,22 @@
 import './../prop-editors'
-import { VNode, PropType } from 'vue'
+import Vue, { VNode, PropType } from 'vue'
 import Draggable from 'vuedraggable'
-import mixins from 'vue-typed-mixins'
 import cloneDeep from 'lodash/cloneDeep'
 import { generateId } from '@sedona-cms/core/lib/utils/nanoid'
 import { eventBus } from '@sedona-cms/core/lib/utils/event-bus'
 import { BlockMeta } from '@sedona-cms/blocks-meta-loader'
 import { BlocksPalette } from '../blocks-palette'
-import { BlockData, MutationPayload } from '../../types'
+import { BlockData } from '../../types'
 import BlocksEditorItem from './blocks-editor-item'
 import BlocksEditorToolbar from './blocks-editor-toolbar'
-import { adminModule } from './store'
-import { historyMixin } from './mixins/history-mixin'
+import { blocks } from './store/blocks'
+import { history } from './store/history'
 
 import './blocks-editor.css'
 
-export default mixins(historyMixin).extend({
+type unwatchFunction = () => void
+
+export default Vue.extend({
   name: 'BlocksEditor',
   props: {
     blocks: {
@@ -32,55 +33,38 @@ export default mixins(historyMixin).extend({
   data() {
     return {
       isPaletteOpen: false as boolean,
-      unsubscribe: undefined as Function | undefined,
-      unwatch: undefined as Function | undefined,
+      unwatch: undefined as unwatchFunction | undefined,
       items: [] as BlockData[],
       drag: false as boolean,
     }
   },
   created(): void {
-    if (!this.$store.hasModule('admin/blocks')) {
-      this.$store.registerModule('admin/blocks', adminModule, { preserveState: false })
-    }
+    history.clear()
 
-    this.unsubscribe = this.$store.subscribe((mutation: MutationPayload, state) => {
-      if (!mutation.type.startsWith('admin/blocks')) {
-        return
-      }
-      const event = mutation.type.replace('admin/blocks/', '')
+    blocks.mutate('load', this.blocks, this.$blocks.meta)
+    this.items = cloneDeep(blocks.state.items)
 
-      this.$emit(event, mutation.payload)
-
-      if (event !== 'load') {
-        this.$emit('change', state['admin/blocks'].items)
-      }
-
-      this.addToHistory(mutation)
-
-      eventBus.emit('core:save-disable', mutation.type === 'admin/blocks/load')
-    })
-
-    this.$store.commit('admin/blocks/load', { blocks: this.blocks, meta: this.$blocks.meta })
-    this.items = cloneDeep(this.$store.state['admin/blocks'].items as BlockData[])
-
-    this.unwatch = this.$store.watch(
-      state => state['admin/blocks'].items,
-      items => (this.items = items),
+    this.unwatch = this.$watch(
+      () => blocks.state.items,
+      value => {
+        const items = cloneDeep(value)
+        this.items = items
+        this.$emit('change', items)
+        eventBus.emit('core:save-disable', false)
+      },
       { deep: true }
     )
+
+    eventBus.emit('core:save-disable', true)
   },
   beforeDestroy(): void {
-    // @ts-ignore
+    // @ts-ignore hotreloading fix
     if (module?.hot?.active === false) {
       return
-    }
-    if (typeof this.unsubscribe === 'function') {
-      this.unsubscribe()
     }
     if (typeof this.unwatch === 'function') {
       this.unwatch()
     }
-    this.$store.unregisterModule('admin/blocks')
   },
   methods: {
     addBlock(blockMeta: BlockMeta): void {
@@ -98,17 +82,16 @@ export default mixins(historyMixin).extend({
         component: blockMeta.name,
         props,
       }
-
-      this.$store.commit('admin/blocks/add', { block })
+      blocks.mutate('add', block)
     },
     cloneBlock(id: string): void {
-      this.$store.commit('admin/blocks/clone', { id })
+      blocks.mutate('clone', id)
     },
-    changeBlockProp(id: string, propName: string, value: any): void {
-      this.$store.commit('admin/blocks/changeProp', { id, propName, value })
+    changeBlockProp(id: string, propName: string, value: unknown): void {
+      blocks.mutate('changeProp', id, propName, value)
     },
     removeBlock({ id }: { id: string }): void {
-      this.$store.commit('admin/blocks/remove', { id })
+      blocks.mutate('remove', id)
     },
     reorder(items: BlockData[]): void {
       this.items = items
@@ -116,7 +99,7 @@ export default mixins(historyMixin).extend({
       for (const item of this.items) {
         ids.push(item.id)
       }
-      this.$store.commit('admin/blocks/reorder', { ids })
+      blocks.mutate('reorder', ids)
     },
     expandAll(): void {
       this.$root.$emit('blocks:expand-all')
@@ -148,14 +131,16 @@ export default mixins(historyMixin).extend({
     return (
       <div class="fit relative-position">
         <blocks-editor-toolbar
-          can-undo={this.canUndo}
-          can-redo={this.canRedo}
+          can-undo={history.canUndo()}
+          can-redo={history.canRedo()}
           blocks-count={this.blocks.length}
-          on-undo={this.undo}
-          on-redo={this.redo}
+          on-undo={history.undo}
+          on-redo={history.redo}
           on-expand-all={this.expandAll}
           on-collapse-all={this.collapseAll}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           on-show-palette={() => (this.$refs['palette'] as any).show()}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           on-hide-palette={() => (this.$refs['palette'] as any).hide()}
         />
         <blocks-palette ref="palette" on-add-block={({ block }) => this.addBlock(block)} />
@@ -168,7 +153,7 @@ export default mixins(historyMixin).extend({
             on-start={() => (this.drag = true)}
             on-end={() => (this.drag = false)}
             on-input={this.reorder}>
-            <transition-group type="transition" name={!this.drag ? 'flip-list' : null}>
+            <transition-group type="transition" name={!this.drag ? 'flip-list' : undefined}>
               {...items}
             </transition-group>
           </draggable>
