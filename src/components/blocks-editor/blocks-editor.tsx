@@ -67,7 +67,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    addBlock(blockMeta: BlockMeta): void {
+    async addBlock(blockMeta: BlockMeta): Promise<void> {
       if (blockMeta.name === undefined) {
         throw new TypeError('Component name not provided')
       }
@@ -83,6 +83,10 @@ export default Vue.extend({
         props,
       }
       blocks.mutate('add', block)
+
+      await this.$nextTick()
+
+      eventBus.emit('blocks:add-block', block)
     },
     cloneBlock(id: string): void {
       blocks.mutate('clone', id)

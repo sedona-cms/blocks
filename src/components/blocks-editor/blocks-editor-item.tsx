@@ -1,6 +1,8 @@
 import Vue, { VNode, PropType } from 'vue'
 import { BlockMeta } from '@sedona-cms/blocks-meta-loader'
+import { eventBus } from '@sedona-cms/core/lib/utils/event-bus'
 import BlocksEditorItemForm from './blocks-editor-item-form'
+import { BlockData } from '../../types'
 
 export default Vue.extend({
   name: 'BlocksEditorItem',
@@ -46,6 +48,15 @@ export default Vue.extend({
   beforeDestroy(): void {
     this.$root.$off('blocks:expand-all', this.expandItem)
     this.$root.$off('blocks:collapse-all', this.collapseItem)
+  },
+  mounted() {
+    eventBus.on('blocks:add-block', args => {
+      const block = args[0] as BlockData
+      if (block.id === this.id) {
+        // @ts-ignore refs
+        this.$refs.blockItem.show()
+      }
+    })
   },
   methods: {
     removeCancelClick(event: Event): void {
