@@ -154,6 +154,7 @@ export default Vue.extend({
             animation={200}
             group="description"
             disabled={false}
+            handle=".q-item"
             on-start={() => (this.drag = true)}
             on-end={() => (this.drag = false)}
             on-input={this.reorder}>
