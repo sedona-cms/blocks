@@ -54,7 +54,7 @@ export default Vue.extend({
     },
     hide(): void {
       (this.$refs.searchInput as HTMLFormElement).clear()
-      this.$el.setAttribute('style', 'left: 0px;')
+      this.$el.setAttribute('style', 'left: -300px;')
       if (this.toggleButton !== null) {
         this.toggleButton.style.display = 'initial'
       }

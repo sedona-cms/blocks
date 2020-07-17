@@ -1,9 +1,9 @@
 .blocks-palette {
     position: fixed;
-    left: 0;
+    left: -300px;
     top: 0;
     width: 295px;
     height: 100%;
     z-index: -1;
-    transition: left 0.2s cubic-bezier(0.82, 0.085, 0.395, 0.895);
+    transition: left 0.3s cubic-bezier(0.82, 0.085, 0.395, 0.895);
 }
