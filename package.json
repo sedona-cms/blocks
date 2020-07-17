@@ -32,7 +32,7 @@
     "vuedraggable": "^2.24.0"
   },
   "devDependencies": {
-    "@nuxt/http": "^0.5.9",
+    "@nuxt/http": "^0.5.10",
     "@nuxt/types": "^0.7.9",
     "@nuxtjs/tailwindcss": "^2.0.0",
     "@sedona-cms/eslint-config": "^1.1.4",
@@ -47,7 +47,7 @@
     "nuxt": "^2.13.3",
     "prettier": "^2.0.5",
     "tsc-watch": "^4.2.9",
-    "typescript": "^3.9.6",
+    "typescript": "^3.9.7",
     "web-streams-polyfill": "^2.1.1"
   },
   "husky": {
