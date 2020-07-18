@@ -1,6 +1,7 @@
 import Vue, { VNode } from 'vue'
 import upperFirst from 'lodash/upperFirst'
 import { BlockMeta } from '@sedona-cms/blocks-meta-loader'
+import { eventBus } from '@sedona-cms/core/lib/utils/event-bus'
 import BlocksPaletteSearch from './blocks-palette-search'
 import BlocksPaletteItem from './blocks-palette-item'
 import { palette } from './store/palette'
@@ -10,7 +11,7 @@ import './blocks-palette.css'
 type Method = () => void
 
 let hideTimer: number
-let hoverWotcherHandler: Method
+let hoverWotcherHandler: Method | undefined
 
 export default Vue.extend({
   name: 'BlocksPalette',
@@ -51,10 +52,14 @@ export default Vue.extend({
 
     this.$el.addEventListener('mouseenter', this.__mouseover)
     this.$el.addEventListener('mouseleave', this.__mouseout)
+
+    eventBus.on('blocks:add-block', this.__initWatcher)
   },
   beforeDestroy() {
     this.$el.removeEventListener('mouseenter', this.__mouseover)
     this.$el.removeEventListener('mouseleave', this.__mouseout)
+
+    eventBus.off('blocks:add-block', this.__initWatcher)
   },
   methods: {
     show(): void {
@@ -63,12 +68,7 @@ export default Vue.extend({
         this.toggleButton.style.display = 'none'
       }
       palette.mutations.setOpen(true)
-
       ;(this.$refs.searchInput as HTMLFormElement).focus()
-
-      hoverWotcherHandler = this.$watch(() => this.hovered, this.__hoverWatcher, {
-        immediate: true,
-      })
     },
     hide(): void {
       (this.$refs.searchInput as HTMLFormElement).clear()
@@ -80,7 +80,16 @@ export default Vue.extend({
 
       if (typeof hoverWotcherHandler === 'function') {
         hoverWotcherHandler()
+        hoverWotcherHandler = undefined
       }
+    },
+    __initWatcher(): void {
+      if (typeof hoverWotcherHandler === 'function') {
+        return
+      }
+      hoverWotcherHandler = this.$watch(() => this.hovered, this.__hoverWatcher, {
+        immediate: true,
+      })
     },
     __hoverWatcher(): void {
       if (this.hovered) {
