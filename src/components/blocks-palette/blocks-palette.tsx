@@ -3,8 +3,14 @@ import upperFirst from 'lodash/upperFirst'
 import { BlockMeta } from '@sedona-cms/blocks-meta-loader'
 import BlocksPaletteSearch from './blocks-palette-search'
 import BlocksPaletteItem from './blocks-palette-item'
+import { palette } from './store/palette'
 
 import './blocks-palette.css'
+
+type Method = () => void
+
+let hideTimer: number
+let hoverWotcherHandler: Method
 
 export default Vue.extend({
   name: 'BlocksPalette',
@@ -17,6 +23,7 @@ export default Vue.extend({
       search: '' as string,
       // eslint-disable-next-line unicorn/no-null
       toggleButton: null as HTMLElement | null,
+      hovered: false as boolean,
     }
   },
   computed: {
@@ -41,6 +48,13 @@ export default Vue.extend({
   },
   mounted(): void {
     this.toggleButton = document.querySelector('.toggle-button')
+
+    this.$el.addEventListener('mouseenter', this.__mouseover)
+    this.$el.addEventListener('mouseleave', this.__mouseout)
+  },
+  beforeDestroy() {
+    this.$el.removeEventListener('mouseenter', this.__mouseover)
+    this.$el.removeEventListener('mouseleave', this.__mouseout)
   },
   methods: {
     show(): void {
@@ -48,9 +62,13 @@ export default Vue.extend({
       if (this.toggleButton !== null) {
         this.toggleButton.style.display = 'none'
       }
+      palette.mutations.setOpen(true)
 
-      (this.$refs.searchInput as HTMLFormElement).focus()
-      this.$emit('show')
+      ;(this.$refs.searchInput as HTMLFormElement).focus()
+
+      hoverWotcherHandler = this.$watch(() => this.hovered, this.__hoverWatcher, {
+        immediate: true,
+      })
     },
     hide(): void {
       (this.$refs.searchInput as HTMLFormElement).clear()
@@ -58,7 +76,25 @@ export default Vue.extend({
       if (this.toggleButton !== null) {
         this.toggleButton.style.display = 'initial'
       }
-      this.$emit('hide')
+      palette.mutations.setOpen(false)
+
+      if (typeof hoverWotcherHandler === 'function') {
+        hoverWotcherHandler()
+      }
+    },
+    __hoverWatcher(): void {
+      if (this.hovered) {
+        clearTimeout(hideTimer)
+        return
+      }
+      // @ts-ignore typescript bug
+      hideTimer = setTimeout(this.hide, 2000)
+    },
+    __mouseover(): void {
+      this.hovered = true
+    },
+    __mouseout(): void {
+      this.hovered = false
     },
   },
   render(): VNode {

@@ -1,4 +1,5 @@
 import Vue, { VNode, PropType } from 'vue'
+import { palette } from '../blocks-palette'
 
 export default Vue.extend({
   name: 'BlocksEditorToolbar',
@@ -16,11 +17,6 @@ export default Vue.extend({
       default: 0,
     },
   },
-  data() {
-    return {
-      isShowPalette: false as boolean,
-    }
-  },
   methods: {
     undo(): void {
       this.$emit('undo')
@@ -35,8 +31,8 @@ export default Vue.extend({
       this.$emit('collapse-all')
     },
     togglePalette(): void {
-      this.isShowPalette = !this.isShowPalette
-      const eventName = this.isShowPalette ? 'show-palette' : 'hide-palette'
+      const isShowPalette = !palette.state.isOpen
+      const eventName = isShowPalette ? 'show-palette' : 'hide-palette'
 
       this.$emit(eventName)
     },
@@ -83,8 +79,8 @@ export default Vue.extend({
         </q-btn>
         <q-separator color="grey-9" />
         <q-btn
-          icon={this.isShowPalette ? 'close' : 'add'}
-          color={this.isShowPalette ? 'negative' : 'primary'}
+          icon={palette.state.isOpen ? 'close' : 'add'}
+          color={palette.state.isOpen ? 'negative' : 'primary'}
           round={true}
           dense={true}
           size="md"
