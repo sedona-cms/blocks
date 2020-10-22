@@ -23,7 +23,7 @@ build-example:
 	npm ci
 	npx npm-self-link
 	make -f Makefile build-prod
-	DEPLOY_ENV=GH_PAGES npx nuxt generate dev --modern
+	DEPLOY_ENV=GH_PAGES npx nuxt generate dev
 	cp -r dev/dist ./dist-docs
 
 watch: build-dev
