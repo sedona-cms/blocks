@@ -18,8 +18,7 @@ export default Vue.extend({
     form: {
       type: Object as PropType<Record<string, unknown>>,
       default: () => {
-        {
-        }
+        {}
       },
     },
   },

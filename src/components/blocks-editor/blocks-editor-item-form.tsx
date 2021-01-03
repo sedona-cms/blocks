@@ -19,8 +19,7 @@ export default Vue.extend({
     form: {
       type: Object as PropType<Record<string, unknown>>,
       default: () => {
-        {
-        }
+        {}
       },
       validator(value: Record<string, unknown>): boolean {
         return typeof value === 'object'

@@ -22,7 +22,7 @@ const mutations = {
         block.props = {}
         for (const propMeta of Object.keys(blockMeta.props)) {
           if (blockMeta.props[propMeta].type === 'date') {
-            block.props[propMeta] = new Date(blockMeta.props[propMeta].default)
+            block.props[propMeta] = new Date(Number(blockMeta.props[propMeta].default))
             continue
           }
           block.props[propMeta] = blockMeta.props[propMeta].default
@@ -33,7 +33,7 @@ const mutations = {
         for (const propMeta of Object.keys(blockMeta.props)) {
           if (!Object.keys(block.props).includes(propMeta)) {
             if (blockMeta.props[propMeta].type === 'date') {
-              block.props[propMeta] = new Date(blockMeta.props[propMeta].default)
+              block.props[propMeta] = new Date(Number(blockMeta.props[propMeta].default))
               continue
             }
             block.props[propMeta] = blockMeta.props[propMeta].default

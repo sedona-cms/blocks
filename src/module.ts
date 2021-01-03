@@ -1,5 +1,5 @@
-import * as path from 'path'
 import * as fs from 'fs'
+import path from 'path'
 import { Module } from '@nuxt/types'
 import orderBy from 'lodash/orderBy'
 import groupBy from 'lodash/groupBy'
@@ -37,7 +37,7 @@ const blocksModule: Module<ModuleConfig> = async function (moduleOptions) {
   const blocksMeta = await loader.getMetaFromDirectory(options.blocksDir)
   blocksMeta.map(item => (item.path = `${options.blocksAlias}/${item.path}`))
 
-  const groupedBlocksFunc = flow([
+  const groupedBlocksFunction = flow([
     () => orderBy(blocksMeta, 'name'),
     result => groupBy(result, 'group'),
     result => toPairs(result),
@@ -52,7 +52,7 @@ const blocksModule: Module<ModuleConfig> = async function (moduleOptions) {
     fileName: path.join('admin/blocks', 'blocks.js'),
     options: {
       blocksMeta,
-      groupedBlocksMeta: groupedBlocksFunc(),
+      groupedBlocksMeta: groupedBlocksFunction(),
     },
   })
 

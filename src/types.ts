@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import { Blocks } from '@/templates/blocks'
 
 declare module 'vue/types/vue' {
