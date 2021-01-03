@@ -1,0 +1,1 @@
+.admin-panel{width:var(--admin-panel-width);position:fixed;top:0;bottom:0;z-index:99;font-size:15px;direction:ltr;transition:left .2s cubic-bezier(.82,.085,.395,.895)}.admin-panel--inner{background:inherit}.admin-panel .toggle-button{left:305px;top:5px;position:absolute}
